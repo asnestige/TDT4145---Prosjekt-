@@ -9,7 +9,7 @@ import java.sql.*;
  *
  * @author Svein Erik
  */
-public class ResultatCtrl extends DBConn {
+public class ResultatCtrlex extends DBConnex {
     
     public void printKlasseResultat (String klasseNavn) {
        try {

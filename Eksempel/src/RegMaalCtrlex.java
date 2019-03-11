@@ -1,12 +1,12 @@
 import java.sql.*;
 import java.util.*;
 
-public class RegMaalCtrl extends DBConn {
+public class RegMaalCtrlex extends DBConnex {
     private int brikkeNr;
     private static final int INGEN_BRIKKE = -1;
     private PreparedStatement regStatement;
 
-    public RegMaalCtrl () {
+    public RegMaalCtrlex() {
         brikkeNr = INGEN_BRIKKE;
     }
 

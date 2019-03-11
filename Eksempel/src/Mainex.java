@@ -7,7 +7,7 @@
  *
  * @author sveinbra
  */
-public class Main {
+public class Mainex {
 
     /**
      * @param args the command line arguments
@@ -16,7 +16,7 @@ public class Main {
         // TODO code application logic here
 
 
-        RegMaalCtrl maalCtrl = new RegMaalCtrl ();
+        RegMaalCtrlex maalCtrl = new RegMaalCtrlex();
         maalCtrl.connect();
         maalCtrl.startReg(123123);
         maalCtrl.regPost(0, 0, 70);
@@ -36,9 +36,9 @@ public class Main {
        
         
         
-        ResultatCtrl resultatCtrl = new ResultatCtrl ();
-        resultatCtrl.connect();
-        resultatCtrl.printKlasseResultat("H50");
+        ResultatCtrlex resultatCtrlex = new ResultatCtrlex();
+        resultatCtrlex.connect();
+        resultatCtrlex.printKlasseResultat("H50");
        
     }
 
