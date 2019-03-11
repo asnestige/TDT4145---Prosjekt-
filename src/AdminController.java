@@ -26,8 +26,23 @@ public class AdminController {
     }
 
 
-    public settInnOvelse(Connection conn, String navn, String beskrivelse) throws SQLException {
-        String preQueryStatement =
+    public static void settInnOvelse(Connection conn, String navn, String beskrivelse) throws SQLException {
+        String preQueryStatement = "INSERT INTO Øvelse (Navn, Beskrivelse) values (?,?)";
+        PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
+
+        prepState.setString(1,navn);
+        prepState.setString(2, beskrivelse);
+        prepState.execute();
     }
+
+    public static void settInnApparat(Connection conn, int apparatID, String apparatNavn) throws SQLException {
+        String preQueryStatement = "INSERT INTO Apparat (ApparatID, ApparatNavn) values (?,?)";
+        PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
+
+        prepState.setInt(1, apparatID);
+        prepState.setString(2, apparatNavn);
+        prepState.execute();
+    }
+
 
 }
