@@ -18,7 +18,7 @@ public class Treningsokt {
 
 
 
-    public Treningsokt(Timestamp tidsstempel, int varighet,int personligForm, int personligPrestasjon, String notat ) {git
+    public Treningsokt(Timestamp tidsstempel, int varighet,int personligForm, int personligPrestasjon, String notat ) {
         this.tidsstempel = tidsstempel;
         this.varighet = varighet;
         this.personligForm = personligForm;
