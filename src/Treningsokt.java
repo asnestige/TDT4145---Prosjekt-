@@ -1,8 +1,7 @@
-import java.sql.Date;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Timestamp;
+
 public class Treningsokt {
 
     private Timestamp tidsstempel;
@@ -16,15 +15,14 @@ public class Treningsokt {
 
 
 
-
-
-    public Treningsokt(Timestamp tidsstempel, int varighet,int personligForm, int personligPrestasjon, String notat ) {
+    public Treningsokt(Timestamp tidsstempel, int varighet,int personligForm, int personligPrestasjon, String notat) {
         this.tidsstempel = tidsstempel;
         this.varighet = varighet;
         this.personligForm = personligForm;
         this.personligPrestasjon = personligPrestasjon;
         this.notat = notat;
     }
+
 
 
     //public void addOvelse(Ovelse ex) {
