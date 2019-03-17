@@ -1,4 +1,11 @@
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.swing.text.html.HTMLDocument.RunElement;
 
 import javafx.fxml.FXML;
@@ -46,6 +53,27 @@ public class TreningController {
 
     public void registrerTreningsokt(){
 
+        try {
+            List<String> input = Arrays.asList(knapp.getText().split(","));
+
+
+            List<String> dateString = Arrays.asList(input.get(0).split("-"));
+            int ar = Integer.parseInt(dateString.get(0));
+            int maned = Integer.parseInt(dateString.get(1));
+            int dag = Integer.parseInt(dateString.get(2));
+            Date dato = new Date(ar - 1900, maned - 1, dag);
+            Time tid = Time.valueOf(input.get(1));
+
+
+            int varighet = Integer.parseInt(input.get(2));
+            int personligform = Integer.parseInt(input.get(3));
+            int prestasjon = Integer.parseInt(input.get(4));
+            String notat = input.get(5);
+        }
+
+        catch (RuntimeException e){
+            textArea.setText("Error: Key is already taken or you wrote unvalid data");
+        }
 
 
     }
