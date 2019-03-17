@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 
 public class AdminController {
 
+
     //1. Registrere apparater, øvelser og treningsøkter med tilhørende data.
 
     public static void settInnTreningsokt(Connection conn, Timestamp tidsstempel, int varighet, int form, int prestasjon, String notat) throws SQLException {
@@ -38,7 +39,8 @@ public class AdminController {
     }
 
     public static void settInnApparat(Connection conn, int apparatID, String apparatNavn) throws SQLException {
-        String preQueryStatement = "INSERT INTO apparat (ApparatID, ApparatNavn) values (?,?)";
+
+        String preQueryStatement = "INSERT INTO Apparat (ApparatID, ApparatNavn) values (?,?)";
         PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
 
         prepState.setInt(1, apparatID);
