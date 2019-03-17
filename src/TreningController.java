@@ -123,10 +123,44 @@ public class TreningController {
         }catch (RuntimeException e) {
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
         }
+    }
 
+    @FXML
+    public void getGjennomsnitt(){
 
+        List<Treningsokt> treningsokter = AdminController.getNWorkouts(myConn, Integer.parseInt(nSisteOktField.getText()));
+        int result = 0;
+        for(Treningsokt treningsokt : treningsokter ){
+            result += treningsokt.getPersonligForm();
+        }
+        int gjennomsnitt = result/treningsokter.size();
+
+        tekstFelt.setText(String.valueOf(gjennomsnitt));
+    }
+
+    @FXML
+    public void getExerciseResult() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+        try {
+            List<String> input = Arrays.asList(resultLoggField.getText().split(","));
+            List<String> startDate = Arrays.asList(input.get(0).split("-"));
+            List<String> endDate = Arrays.asList(input.get(1).split("-"));
+            int startYear = Integer.parseInt(startDate.get(0));
+            int startMonth = Integer.parseInt(startDate.get(1));
+            int startDay = Integer.parseInt(startDate.get(2));
+            Date dateStart = new Date(startYear, startMonth, startDay);
+            int endYear = Integer.parseInt(endDate.get(0));
+            int endMonth = Integer.parseInt(endDate.get(1));
+            int endDay = Integer.parseInt(endDate.get(2));
+            Date dateEnd = new Date(endYear, endMonth, endDay);
+            String result = AdminController.getExerciseResult(myConn, dateStart, dateEnd);
+            tekstFelt.setText(result);
+
+        }catch (RuntimeException e) {
+            tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
+        }
     }
 
 
-    }
+
+}
 
