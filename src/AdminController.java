@@ -71,4 +71,34 @@ public class AdminController {
         return okter;
     }
 
+
+
+
+
+    //4. Lage øvelsegrupper og finne øvelser som er i samme gruppe.
+    public static void lagOvelsegruppe(Connection conn, String ovelsegruppenavn, String muskelgruppe) throws SQLException{
+        List<Ovelser> ovelsegrupper = new ArrayList<Ovelser>();
+
+        String statement = "SELECT * FROM InngårI";
+        PreparedStatement prepState = conn.prepareStatement(statement);
+        ResultSet rs = prepState.executeQuery();
+
+        //Lager en map der Ovelsegruppenavn er key, og liste med navnene til Ovelser er value
+        Map<String, ArrayList<String>> inngåri = new HashMap<String, ArrayList<String>>();
+        while (rs.next()) {
+            if(inngåri.containsKey(rs.getString("Ovelsegruppenavn"))) {
+                inngåri.get(rs.getString("Ovelsegruppenavn"));
+            }
+            else {
+                inngåri.put(rs.getString("Ovelsegruppenavn"), new ArrayList<String>(Arrays.asList(rs.getString("Navn"))));
+            }
+        }
+
+
+
+        prepState.setString(1,ovelsegruppenavn);
+        prepState.setString(2,muskelgruppe);
+        prepState.execute();
+    }
+
 }
