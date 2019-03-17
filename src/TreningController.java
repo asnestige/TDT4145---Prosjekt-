@@ -18,17 +18,30 @@ import java.util.List;
 
 public class TreningController {
 
+
+    @FXML
+    TextField regTreningField, regOvelseField, regApparatField, nSisteOktField, resultLoggField, regOvelsegruppeField, sloOppField;
+
+    @FXML
+    Button regTreningButton, regOvelseButton, regApparatButton, nSisteOktButton, resultLoggButton, regOvelsegruppeButton,sloOppButton, personligFormButton;
+
+    @FXML
+    TextArea tekstFelt;
+
+    Connection myConn;
+
+
     public void registrerOvelse(){
     try{
 
-        List<String> input = Arrays.asList(knapp.getText().split(","));
+        List<String> input = Arrays.asList(regOvelseField.getText().split(","));
         String navn = input.get(0);
         String beskrivelse = input.get(1);
         AdminController.insertExercise(myConn, navn, beskrivelse);
-        textArea.setText("Exercise added");
+        tekstFelt.setText("Exercise added");
         }
         catch (RuntimeException e) {
-        textArea.setText("Error: Key is already taken or you wrote unvalid data");
+            tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
         }
 
     }
@@ -36,17 +49,17 @@ public class TreningController {
     public void registrerApperat() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
         try {
-            List<String> input = Arrays.asList(knapp.getText().split(","));
+            List<String> input = Arrays.asList(regApparatField.getText().split(","));
             String navn = input.get(0);
             String beskrivelse = input.get(1);
 //legg til apperat
             AdminController.insertMachine(myConn, navn, beskrivelse);
-            textArea.setText("Machine added");
+            tekstFelt.setText("Machine added");
         }
 
         catch (RuntimeException e){
 
-            textArea.setText("Error: Key is already taken or you wrote unvalid data");
+            tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
         }
 
     }
@@ -54,7 +67,7 @@ public class TreningController {
     public void registrerTreningsokt(){
 
         try {
-            List<String> input = Arrays.asList(knapp.getText().split(","));
+            List<String> input = Arrays.asList(regTreningField.getText().split(","));
 
 
             List<String> dateString = Arrays.asList(input.get(0).split("-"));
@@ -72,7 +85,7 @@ public class TreningController {
         }
 
         catch (RuntimeException e){
-            textArea.setText("Error: Key is already taken or you wrote unvalid data");
+            tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
         }
 
 
@@ -80,15 +93,40 @@ public class TreningController {
 
     public void registrerOvelsegruppe(){
         try{
-            List<Sting> input = Arrays.asList(knapp.getText().split(","));
-            Sting navn = input.get(0);
+            List<String> input = Arrays.asList(regOvelsegruppeField.getText().split(","));
+            String navn = input.get(0);
             AdminController.insertExerciseGroup(myConn, navn);
-            textArea.setText("ExerciseGroup added");
+            tekstFelt.setText("ExerciseGroup added");
         }
         catch (RuntimeException e) {
-            textArea.setText("Error: Key is already taken or you wrote unvalid data");
+            tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
         }
 
         }
+
+    @FXML
+    public void getnSisteOktField() throws NumberFormatException, SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException{
+        try {
+            List<Treningsokt> treningsokter = AdminController.getNWorkouts(myConn, Integer.parseInt(nSisteOktField.getText()));
+            String result = "Date \t\t tidspunkt \t varighet \t Form \t Prestasjon \t Notat\n";
+
+            for(Treningsokt treningsokt : treningsokter ) {
+                result += treningsokt.getTidsstempel().toString() + "\t";
+                result += treningsokt.getVarighet() + "\t\t  ";
+                result += treningsokt.getPersonligForm() + "\t\t ";
+                result += treningsokt.getPersonligPrestasjon() + "\t\t\t";
+                result += treningsokt.getNotat() + "\n";
+            }
+
+            tekstFelt.setText(result);
+
+        }catch (RuntimeException e) {
+            tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
+        }
+
+
+    }
+
+
     }
 
