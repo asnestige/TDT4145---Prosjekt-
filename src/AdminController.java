@@ -114,7 +114,7 @@ public class AdminController {
     }
 
 
-    public static List<Ovelser> getOvelsegruppe(Connection conn, String ovelsegruppenavn) throws SQLException{
+    public static List<Ovelse> getOvelsegruppe(Connection conn, String ovelsegruppenavn) throws SQLException{
         String preQueryStatement = "SELECT * FROM (øvelsegruppe NATURAL JOIN inngåri NATURAL JOIN øvelsegruppe) WHERE Øvelsegruppenavn = ?";
         PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
 
@@ -122,14 +122,14 @@ public class AdminController {
         ResultSet rs = prepState.executeQuery();
 
         //Lager en map der Ovelsegruppenavn er key, og liste med navnene til Ovelser er value
-        Map<String, ArrayList<Ovelser>> inngåri = new HashMap<String, ArrayList<Ovelser>>();
+        Map<String, ArrayList<Ovelse>> inngåri = new HashMap<String, ArrayList<Ovelse>>();
         while (rs.next()) {
             if(inngåri.containsKey(rs.getString("Øvelsegruppenavn"))) {
                 return inngåri.get(rs.getString("Øvelsegruppenavn"));
             }
             else {
-                Ovelser ovelse = new Ovelser(rs.getString("Navn"), rs.getString("Notat"));
-                inngåri.put(rs.getString("Øvelsegruppenavn"), new ArrayList<Ovelser>(Arrays.asList(ovelse)));
+                Ovelse ovelse = new Ovelse(rs.getString("Navn"), rs.getString("Notat"));
+                inngåri.put(rs.getString("Øvelsegruppenavn"), new ArrayList<Ovelse>(Arrays.asList(ovelse)));
             }
         }
         return inngåri.get(rs.getString("Øvelsegruppenavn"));
