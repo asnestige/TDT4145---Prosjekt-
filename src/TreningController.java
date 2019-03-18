@@ -152,7 +152,8 @@ public class TreningController {
         try{
             List<String> input = Arrays.asList(regOvelsegruppeField.getText().split(","));
             String navn = input.get(0);
-            AdminController.insertExerciseGroup(myConn, navn);
+            String muskelgruppe = input.get(1);
+            AdminController.settInnOvelsegruppe(myConn, navn, muskelgruppe);
             tekstFelt.setText("ExerciseGroup added");
         }
         catch (RuntimeException e) {
@@ -163,8 +164,12 @@ public class TreningController {
 
     @FXML
     public void getOvelse(){
-        List<String> input = Arrays.asList(sloOppField.getText());
-        String navn = input.get(0);
+        String input = sloOppField.getText();
+        OVelsegruppe gruppenavn = input.get(0);
+        tekstFelt.setText(gruppenavn.getOvelser());
+
+
+
 
     }
 
