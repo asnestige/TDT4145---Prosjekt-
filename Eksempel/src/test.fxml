@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TrainingController">
+    <children>
+        <VBox layoutX="20.0" layoutY="44.0" prefHeight="184.0" prefWidth="465.0" spacing="40.0">
+            <children>
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#registerWorkout" prefWidth="200.0" text="Register Workout" />
+                        <TextField fx:id="registerWorkoutField" prefHeight="27.0" prefWidth="250.0" promptText="(dato, tidspunk, varighet, personlig form, prestajon, notat)" />
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                    <children>
+                        <Button fx:id="registerExerciseButton" mnemonicParsing="false" onAction="#registerExercise" prefWidth="200.0" text="Register exercise" />
+                        <TextField fx:id="registerExerciseField" prefHeight="27.0" prefWidth="250.0" promptText="(navn, beskrivelse)" />
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#registerMachine" prefWidth="200.0" text="Register Machine" />
+                        <TextField fx:id="registerMachineField" prefHeight="27.0" prefWidth="250.0" promptText="(navn, beskrivelse)" />
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                    <children>
+                        <Button fx:id="registerExcersiceGroupButton" mnemonicParsing="false" onAction="#registerExerciseGroup" prefWidth="200.0" text="Register excercise group" />
+                        <TextField fx:id="registerExerciseGroupField" prefHeight="27.0" prefWidth="250.0" promptText="(navn)" />
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                    <children>
+                        <Button fx:id="registerExerciseInGroupButton" mnemonicParsing="false" onAction="#registerExerciseInGroup" prefWidth="200.0" text="Register Exercise in group" />
+                        <TextField fx:id="registerExerciseInGroupField" prefWidth="250.0" promptText="(gruppe, øvelsenavn)" />
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                    <children>
+                        <Button fx:id="registerExerciseInWorkoutButton" mnemonicParsing="false" onAction="#registerExerciseInWorkout" prefWidth="200.0" text="Register Exercise in workout" />
+                        <TextField fx:id="registerExerciseInWorkoutField" prefWidth="250.0" promptText="(dato, navn, kilo, sett)" />
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                    <children>
+                        <Button fx:id="registerExerciseOnMachineButton" mnemonicParsing="false" onAction="#registerExerciseOnMachine" prefWidth="200.0" text="Register Exercise on Machine" />
+                        <TextField fx:id="registerExerciseOnMachineField" prefWidth="250.0" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+        <TextArea fx:id="textArea" layoutX="621.0" layoutY="279.0" prefHeight="200.0" prefWidth="542.0" />
+        <Text layoutX="240.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="yyyy-mm-dd,hh:mm:ss,dur,perf, shape, note" />
+        <Text layoutX="242.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
+        <Text layoutX="237.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name, description" />
+        <Text layoutX="239.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name, description" />
+        <Text layoutX="240.0" layoutY="440.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exercise name, machine name" />
+        <Text layoutX="240.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="date, name, kilo, sets" />
+        <Text layoutX="240.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="exercise group, exercise name" />
+        <Text layoutX="783.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start date, end date" />
+        <VBox layoutX="619.0" layoutY="32.0" prefHeight="228.0" prefWidth="344.0" spacing="40.0">
+            <children>
+                <Button fx:id="getTotalWorkoutsButton" mnemonicParsing="false" onAction="#getTotalWorkouts" prefWidth="145.0" text="Get Total Exercises" />
+                <Button fx:id="getExerciseGroupsButton" mnemonicParsing="false" onAction="#getExerciseGroups" prefWidth="145.0" text="Get exercise Groups" />
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                    <children>
+                        <Button fx:id="getNLastWorkoutsButton" mnemonicParsing="false" onAction="#getNLastWorkouts" prefWidth="145.0" text="Get n last workouts" />
+                        <TextField fx:id="getNLastWorkoutsField" promptText="How many workouts?" />
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                    <children>
+                        <Button fx:id="getExerciseResultsButton" mnemonicParsing="false" onAction="#getExerciseResult" prefWidth="145.0" text="Get Exercise Results" />
+                        <TextField fx:id="getExerciseResultsField" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</Pane>
