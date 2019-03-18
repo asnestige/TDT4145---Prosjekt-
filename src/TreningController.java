@@ -148,7 +148,7 @@ public class TreningController {
 
     // 4. Lage øvelsesgrupper og finne øvelser som er i samme gruppe
     @FXML
-    public void registrerOvelsegruppe(){
+    public void registrerOvelsegruppe() throws SQLException {
         try{
             List<String> input = Arrays.asList(regOvelsegruppeField.getText().split(","));
             String navn = input.get(0);
@@ -163,13 +163,14 @@ public class TreningController {
         }
 
     @FXML
-    public void getOvelse(){
+    public void getOvelse() throws SQLException{
+        result = "";
         String input = sloOppField.getText();
-        OVelsegruppe gruppenavn = input.get(0);
-        tekstFelt.setText(gruppenavn.getOvelser());
-
-
-
+        List<Ovelse> g = AdminController.getOvelsegruppe(myConn, input);
+        for (Ovelse ovelse: g){
+            result += ovelse;
+        }
+        tekstFelt.setText(result);
 
     }
 
