@@ -33,6 +33,7 @@ public class TreningController {
 
     public void initialize() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
         // må opprette connection her
+        this.myConn = DBConn.conn;
 
     }
 
