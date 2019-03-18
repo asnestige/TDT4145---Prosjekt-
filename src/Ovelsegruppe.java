@@ -23,6 +23,7 @@ public class Ovelsegruppe {
     }
 
     public List<Ovelse> getOvelser(){
+
         return ovelser;
 
     }
