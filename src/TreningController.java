@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.text.html.HTMLDocument.RunElement;
+import java.sql.SQLException;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -30,14 +31,15 @@ public class TreningController {
 
     Connection myConn;
 
-    @FXML
-    public void registrerOvelse(){
-    try{
 
+    // 1. Registrere apparater, øvelser og treningsøkter med tilhørende data.
+    @FXML
+    public void registrerOvelse() throws SQLException {
+    try{
         List<String> input = Arrays.asList(regOvelseField.getText().split(","));
         String navn = input.get(0);
         String beskrivelse = input.get(1);
-        AdminController.insertExercise(myConn, navn, beskrivelse);
+        AdminController.settInnOvelse(myConn, navn, beskrivelse);
         tekstFelt.setText("Exercise added");
         }
         catch (RuntimeException e) {
@@ -51,9 +53,9 @@ public class TreningController {
         try {
             List<String> input = Arrays.asList(regApparatField.getText().split(","));
             String navn = input.get(0);
-            String beskrivelse = input.get(1);
-//legg til apperat
-            AdminController.insertMachine(myConn, navn, beskrivelse);
+            int apparatID = Integer. parseInt(input.get(1));
+            //legg til apparat
+            AdminController.settInnApparat(myConn, apparatID, navn);
             tekstFelt.setText("Machine added");
         }
 
@@ -91,7 +93,60 @@ public class TreningController {
 
 
     }
+    // 2. Få opp informasjon om et antall n sist gjennomførte treningsøkter med notater, der n spesifiseres av brukeren.
+    @FXML
+    public void getnSisteOkt() throws NumberFormatException, SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException{
+        try {
+            List<Treningsokt> treningsokter = AdminController.getNOkter(myConn, Integer.parseInt(nSisteOktField.getText()));
+            String result = "Date \t\t tidspunkt \t varighet \t Form \t Prestasjon \t Notat\n";
 
+            for(Treningsokt treningsokt : treningsokter ) {
+                result += treningsokt.getTidsstempel().toString() + "\t";
+                result += treningsokt.getVarighet() + "\t\t  ";
+                result += treningsokt.getPersonligForm() + "\t\t ";
+                result += treningsokt.getPersonligPrestasjon() + "\t\t\t";
+                result += treningsokt.getNotat() + "\n";
+            }
+
+            tekstFelt.setText(result);
+
+        }catch (RuntimeException e) {
+            tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
+        }
+    }
+
+    // 3. For hver enkelt øvelse skal det være mulig å se en resultatlogg i et gitt tidsintervall
+    @FXML
+    public void getResultatlogg() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+        try {
+            List<String> input = Arrays.asList(resultLoggField.getText().split(","));
+            List<String> startDate = Arrays.asList(input.get(1).split("-"));
+            List<String> endDate = Arrays.asList(input.get(2).split("-"));
+            String ovelse = input.get(0);
+
+            int startAr = Integer.parseInt(startDate.get(0));
+            int startManed = Integer.parseInt(startDate.get(1));
+            int startDag = Integer.parseInt(startDate.get(2));
+
+            Date dateStart = new Date(startAr, startManed, startDag);
+
+            int endAr = Integer.parseInt(endDate.get(0));
+            int endManed = Integer.parseInt(endDate.get(1));
+            int endDag = Integer.parseInt(endDate.get(2));
+
+            Date dateEnd = new Date(endAr, endManed, endDag);
+
+            String result = AdminController.getResultatlogg(myConn, ovelseNavn, dateStart, dateEnd);
+            tekstFelt.setText(result);
+
+        }
+        catch (RuntimeException e) {
+            tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
+        }
+    }
+
+
+    // 4. Lage øvelsesgrupper og finne øvelser som er i samme gruppe
     @FXML
     public void registrerOvelsegruppe(){
         try{
@@ -113,31 +168,11 @@ public class TreningController {
 
     }
 
+    // 5. Finne gjennomsnittlig personlig form
     @FXML
-    public void getnSisteOkt() throws NumberFormatException, SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException{
-        try {
-            List<Treningsokt> treningsokter = AdminController.getNWorkouts(myConn, Integer.parseInt(nSisteOktField.getText()));
-            String result = "Date \t\t tidspunkt \t varighet \t Form \t Prestasjon \t Notat\n";
+    public void getGjennomsnitt()  throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
 
-            for(Treningsokt treningsokt : treningsokter ) {
-                result += treningsokt.getTidsstempel().toString() + "\t";
-                result += treningsokt.getVarighet() + "\t\t  ";
-                result += treningsokt.getPersonligForm() + "\t\t ";
-                result += treningsokt.getPersonligPrestasjon() + "\t\t\t";
-                result += treningsokt.getNotat() + "\n";
-            }
-
-            tekstFelt.setText(result);
-
-        }catch (RuntimeException e) {
-            tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
-        }
-    }
-
-    @FXML
-    public void getGjennomsnitt(){
-
-        List<Treningsokt> treningsokter = AdminController.getNWorkouts(myConn, Integer.parseInt(nSisteOktField.getText()));
+        List<Treningsokt> treningsokter = AdminController.getNOkter(myConn, Integer.parseInt(nSisteOktField.getText()));
         int result = 0;
         for(Treningsokt treningsokt : treningsokter ){
             result += treningsokt.getPersonligForm();
@@ -145,36 +180,6 @@ public class TreningController {
         int gjennomsnitt = result/treningsokter.size();
 
         tekstFelt.setText(String.valueOf(gjennomsnitt));
-    }
-
-
-
-    @FXML
-    public void getResultatlogg() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-        try {
-            List<String> input = Arrays.asList(resultLoggField.getText().split(","));
-            List<String> startDate = Arrays.asList(input.get(0).split("-"));
-            List<String> endDate = Arrays.asList(input.get(1).split("-"));
-
-            int startAr = Integer.parseInt(startDate.get(0));
-            int startManed = Integer.parseInt(startDate.get(1));
-            int startDag = Integer.parseInt(startDate.get(2));
-
-            Date dateStart = new Date(startAr, startManed, startDag);
-
-            int endAr = Integer.parseInt(endDate.get(0));
-            int endManed = Integer.parseInt(endDate.get(1));
-            int endDag = Integer.parseInt(endDate.get(2));
-
-            Date dateEnd = new Date(endAr, endManed, endDag);
-
-            String result = AdminController.getExerciseResult(myConn, dateStart, dateEnd);
-            tekstFelt.setText(result);
-
-        }
-        catch (RuntimeException e) {
-            tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
-        }
     }
 
 
