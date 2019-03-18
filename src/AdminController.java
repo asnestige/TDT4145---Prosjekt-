@@ -25,7 +25,7 @@ public class AdminController {
         prepState.setInt(3, personligForm);
         prepState.setInt(4, personligPrestasjon);
         prepState.setString(5, notat);
-        prepState.execute();
+        prepState.executeQuery();
     }
 
 
@@ -35,7 +35,7 @@ public class AdminController {
 
         prepState.setString(1,navn);
         prepState.setString(2, beskrivelse);
-        prepState.execute();
+        prepState.executeQuery();
     }
 
     public static void settInnApparat(Connection conn, int apparatID, String apparatNavn) throws SQLException {
@@ -45,7 +45,7 @@ public class AdminController {
 
         prepState.setInt(1, apparatID);
         prepState.setString(2, apparatNavn);
-        prepState.execute();
+        prepState.executeQuery();
     }
 
 
@@ -69,7 +69,7 @@ public class AdminController {
             okter.add(okt);
 
         }
-        prepState.execute();
+        prepState.executeQuery();
         return okter;
     }
 
@@ -78,7 +78,6 @@ public class AdminController {
 
     // 3. For hver enkelt øvelse skal det være mulig å se en resultatlogg i et gitt tidsintervall spesifisert
     // av brukeren.
-
 
     public static List<String> getResultatlogg(Connection conn, String ovelseNavn, Timestamp startTid, Timestamp sluttTid) throws SQLException {
         String preQueryStatement = "SELECT Resultat FROM (treningsøkt NATURAL JOIN øvelseutført NATURAL JOIN øvelse) WHERE (Navn = ?) AND (Tidsstempel BETWEEN ? AND ?)";
@@ -105,26 +104,36 @@ public class AdminController {
 
 
     //4. Lage øvelsegrupper og finne øvelser som er i samme gruppe.
-    public static void lagOvelsegruppe(Connection conn, String ovelsegruppenavn, String muskelgruppe) throws SQLException{
-        List<Ovelser> ovelsegrupper = new ArrayList<Ovelser>();
+    public static void settInnOvelsegruppe(Connection conn, String ovelsegruppenavn, String muskelgruppe) throws SQLException {
+        String preQueryStatement = "INSERT INTO øvelsegruppe (Øvelsegruppenavn, Muskelgruppe) VALUES (?, ?)";
+        PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
 
-        String statement = "SELECT * FROM InngårI";
-        PreparedStatement prepState = conn.prepareStatement(statement);
+        prepState.setString(1, ovelsegruppenavn);
+        prepState.setString(2, muskelgruppe);
+        prepState.executeQuery();
+    }
+
+
+    public static List<Ovelser> getOvelsegruppe(Connection conn, String ovelsegruppenavn) throws SQLException{
+        String preQueryStatement = "SELECT * FROM (øvelsegruppe NATURAL JOIN inngåri NATURAL JOIN øvelsegruppe) WHERE Øvelsegruppenavn = ?";
+        PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
+
+        prepState.setString(1, ovelsegruppenavn);
         ResultSet rs = prepState.executeQuery();
 
         //Lager en map der Ovelsegruppenavn er key, og liste med navnene til Ovelser er value
-        Map<String, ArrayList<String>> inngåri = new HashMap<String, ArrayList<String>>();
+        Map<String, ArrayList<Ovelser>> inngåri = new HashMap<String, ArrayList<Ovelser>>();
         while (rs.next()) {
-            if(inngåri.containsKey(rs.getString("Ovelsegruppenavn"))) {
-                inngåri.get(rs.getString("Ovelsegruppenavn"));
+            if(inngåri.containsKey(rs.getString("Øvelsegruppenavn"))) {
+                return inngåri.get(rs.getString("Øvelsegruppenavn"));
             }
             else {
-                inngåri.put(rs.getString("Ovelsegruppenavn"), new ArrayList<String>(Arrays.asList(rs.getString("Navn"))));
+                Ovelser ovelse = new Ovelser(rs.getString("Navn"), rs.getString("Notat"));
+                inngåri.put(rs.getString("Øvelsegruppenavn"), new ArrayList<Ovelser>(Arrays.asList(ovelse)));
             }
         }
-
-
-
+        return inngåri.get(rs.getString("Øvelsegruppenavn"));
     }
+
 
 }
