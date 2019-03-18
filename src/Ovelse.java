@@ -1,7 +1,7 @@
-public class Ovelser {
+public class Ovelse {
     private String navn, resultat;
 
-    public Ovelser(String navn, String resultat) {
+    public Ovelse(String navn, String resultat) {
         this.navn = navn;
         this.resultat = resultat;
     }
