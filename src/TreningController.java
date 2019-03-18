@@ -30,7 +30,7 @@ public class TreningController {
 
     Connection myConn;
 
-
+    @FXML
     public void registrerOvelse(){
     try{
 
@@ -45,7 +45,7 @@ public class TreningController {
         }
 
     }
-
+    @FXML
     public void registrerApperat() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
         try {
@@ -64,6 +64,7 @@ public class TreningController {
 
     }
 
+    @FXML
     public void registrerTreningsokt(){
 
         try {
@@ -91,6 +92,7 @@ public class TreningController {
 
     }
 
+    @FXML
     public void registrerOvelsegruppe(){
         try{
             List<String> input = Arrays.asList(regOvelsegruppeField.getText().split(","));
@@ -105,7 +107,14 @@ public class TreningController {
         }
 
     @FXML
-    public void getnSisteOktField() throws NumberFormatException, SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException{
+    public void getOvelse(){
+        List<String> input = Arrays.asList(sloOppField.getText());
+        String navn = input.get(0);
+
+    }
+
+    @FXML
+    public void getnSisteOkt() throws NumberFormatException, SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException{
         try {
             List<Treningsokt> treningsokter = AdminController.getNWorkouts(myConn, Integer.parseInt(nSisteOktField.getText()));
             String result = "Date \t\t tidspunkt \t varighet \t Form \t Prestasjon \t Notat\n";
@@ -138,24 +147,32 @@ public class TreningController {
         tekstFelt.setText(String.valueOf(gjennomsnitt));
     }
 
+
+
     @FXML
-    public void getExerciseResult() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+    public void getResultatlogg() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
         try {
             List<String> input = Arrays.asList(resultLoggField.getText().split(","));
             List<String> startDate = Arrays.asList(input.get(0).split("-"));
             List<String> endDate = Arrays.asList(input.get(1).split("-"));
-            int startYear = Integer.parseInt(startDate.get(0));
-            int startMonth = Integer.parseInt(startDate.get(1));
-            int startDay = Integer.parseInt(startDate.get(2));
-            Date dateStart = new Date(startYear, startMonth, startDay);
-            int endYear = Integer.parseInt(endDate.get(0));
-            int endMonth = Integer.parseInt(endDate.get(1));
-            int endDay = Integer.parseInt(endDate.get(2));
-            Date dateEnd = new Date(endYear, endMonth, endDay);
+
+            int startAr = Integer.parseInt(startDate.get(0));
+            int startManed = Integer.parseInt(startDate.get(1));
+            int startDag = Integer.parseInt(startDate.get(2));
+
+            Date dateStart = new Date(startAr, startManed, startDag);
+
+            int endAr = Integer.parseInt(endDate.get(0));
+            int endManed = Integer.parseInt(endDate.get(1));
+            int endDag = Integer.parseInt(endDate.get(2));
+
+            Date dateEnd = new Date(endAr, endManed, endDag);
+
             String result = AdminController.getExerciseResult(myConn, dateStart, dateEnd);
             tekstFelt.setText(result);
 
-        }catch (RuntimeException e) {
+        }
+        catch (RuntimeException e) {
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
         }
     }
