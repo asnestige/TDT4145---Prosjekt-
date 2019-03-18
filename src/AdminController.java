@@ -16,14 +16,14 @@ public class AdminController {
 
     //1. Registrere apparater, øvelser og treningsøkter med tilhørende data.
 
-    public static void settInnTreningsokt(Connection conn, Timestamp tidsstempel, int varighet, int form, int prestasjon, String notat) throws SQLException {
+    public static void settInnTreningsokt(Connection conn, Timestamp tidsstempel, int varighet, int personligForm, int personligPrestasjon, String notat) throws SQLException {
         String preQueryStatement = "INSERT INTO treningsøkt (Tidsstempel, Varighet, Form, Prestasjon, Notat) values (?,?,?,?,?)";
         PreparedStatement prepState= conn.prepareStatement(preQueryStatement);
 
         prepState.setTimestamp(1, tidsstempel);
         prepState.setInt(2, varighet);
-        prepState.setInt(3, form);
-        prepState.setInt(4, prestasjon);
+        prepState.setInt(3, personligForm);
+        prepState.setInt(4, personligPrestasjon);
         prepState.setString(5, notat);
         prepState.execute();
     }
@@ -53,7 +53,7 @@ public class AdminController {
     // 2. Få opp informasjon om et antall n sist gjennomførte treningsøkter med notater, der n
     //spesifiseres av brukeren.
 
-    public static List<Treningsokt> hentOkter(Connection conn, int n) throws SQLException {
+    public static List<Treningsokt> getNOkter(Connection conn, int n) throws SQLException {
         List<Treningsokt> okter = new ArrayList<Treningsokt>();
 
         String preQueryStatement = "SELECT * FROM treningsøkt ORDER BY Tidsstempel DESC LIMIT ?";
@@ -72,6 +72,19 @@ public class AdminController {
         prepState.execute();
         return okter;
     }
+
+
+
+
+    // 3. For hver enkelt øvelse skal det være mulig å se en resultatlogg i et gitt tidsintervall spesifisert
+    // av brukeren.
+
+
+    public static List<Treningsokt> getResultatlogg(Connection conn, Timestamp startTid, Timestamp sluttTid) throws SQLException {
+        String preQueryStatement = "SELECT Resultat FROM OVELSE WHERE Tidsstempel BETWEEN ? AND ?";
+        PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
+    }
+
 
 
 
@@ -98,9 +111,6 @@ public class AdminController {
 
 
 
-        prepState.setString(1,ovelsegruppenavn);
-        prepState.setString(2,muskelgruppe);
-        prepState.execute();
     }
 
 }
