@@ -1,8 +1,5 @@
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.sql.Time;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -122,22 +119,28 @@ public class TreningController {
             List<String> input = Arrays.asList(resultLoggField.getText().split(","));
             List<String> startDate = Arrays.asList(input.get(1).split("-"));
             List<String> endDate = Arrays.asList(input.get(2).split("-"));
-            String ovelse = input.get(0);
+            String ovelseNavn = input.get(0);
 
-            int startAr = Integer.parseInt(startDate.get(0));
+    //finne start timestamp
+            int startAr = Integer.parseInt(startDate.get(2));
             int startManed = Integer.parseInt(startDate.get(1));
-            int startDag = Integer.parseInt(startDate.get(2));
+            int startDag = Integer.parseInt(startDate.get(0));
 
-            Date dateStart = new Date(startAr, startManed, startDag);
+            Timestamp dateStart = new Timestamp(startAr, startManed, startDag,0,0,0,0);
 
-            int endAr = Integer.parseInt(endDate.get(0));
+    //finne end timestamp
+            int endAr = Integer.parseInt(endDate.get(2));
             int endManed = Integer.parseInt(endDate.get(1));
-            int endDag = Integer.parseInt(endDate.get(2));
+            int endDag = Integer.parseInt(endDate.get(0));
 
-            Date dateEnd = new Date(endAr, endManed, endDag);
+            Timestamp dateEnd = new Timestamp(endAr, endManed, endDag,0,0,0,0);
 
-            String result = AdminController.getResultatlogg(myConn, ovelseNavn, dateStart, dateEnd);
-            tekstFelt.setText(result);
+            String resultatlogg = "";
+            List<String> results = AdminController.getResultatlogg(myConn, ovelseNavn, dateStart, dateEnd);
+            for (String result: results ){
+                resultatlogg += result;
+            }
+            tekstFelt.setText(resultatlogg);
 
         }
         catch (RuntimeException e) {
@@ -164,11 +167,11 @@ public class TreningController {
 
     @FXML
     public void getOvelse() throws SQLException{
-        result = "";
+        String result = "";
         String input = sloOppField.getText();
         List<Ovelse> g = AdminController.getOvelsegruppe(myConn, input);
         for (Ovelse ovelse: g){
-            result += ovelse;
+            result += ovelse.toString();
         }
         tekstFelt.setText(result);
 
