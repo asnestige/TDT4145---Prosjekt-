@@ -80,9 +80,23 @@ public class AdminController {
     // av brukeren.
 
 
-    public static List<Treningsokt> getResultatlogg(Connection conn, Timestamp startTid, Timestamp sluttTid) throws SQLException {
-        String preQueryStatement = "SELECT Resultat FROM OVELSE WHERE Tidsstempel BETWEEN ? AND ?";
+    public static List<String> getResultatlogg(Connection conn, String ovelseNavn, Timestamp startTid, Timestamp sluttTid) throws SQLException {
+        String preQueryStatement = "SELECT Resultat FROM (treningsøkt NATURAL JOIN øvelseutført NATURAL JOIN øvelse) WHERE (Navn = ?) AND (Tidsstempel BETWEEN ? AND ?)";
         PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
+
+        prepState.setString(1, ovelseNavn);
+        prepState.setTimestamp(2, startTid);
+        prepState.setTimestamp(3, sluttTid);
+        ResultSet rs = prepState.executeQuery();
+
+        List<String> resultater = new ArrayList<String>();
+
+        while (rs.next()) {
+            String resultat = rs.getString("Resultat");
+            resultater.add(resultat);
+        }
+
+        return resultater;
     }
 
 
