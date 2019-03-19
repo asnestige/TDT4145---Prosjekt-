@@ -16,7 +16,6 @@ import java.util.List;
 
 public class TreningController {
 
-
     @FXML
     TextField regTreningField, regOvelseField, regApparatField, nSisteOktField, resultLoggField, regOvelsegruppeField, sloOppField;
 
@@ -30,7 +29,6 @@ public class TreningController {
 
     public void initialize() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
         this.myConn = DBConn.getDBConnection();
-
     }
 
 
@@ -41,6 +39,7 @@ public class TreningController {
     try{
         List<String> input = Arrays.asList(regOvelseField.getText().split(","));
         String navn = input.get(0);
+        System.out.print(navn);
         String beskrivelse = input.get(1);
         AdminController.settInnOvelse(myConn, navn, beskrivelse);
         tekstFelt.setText("Exercise added");
@@ -64,6 +63,7 @@ public class TreningController {
             //legg til apparat
             AdminController.settInnApparat(myConn, apparatID, navn);
             tekstFelt.setText("Machine added");
+
         }
 
         catch (RuntimeException e){
