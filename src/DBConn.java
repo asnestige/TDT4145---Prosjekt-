@@ -14,11 +14,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public abstract class DBConn {
-    protected Connection conn;
+public protected class DBConn {
+
+    public Connection conn;
 
     public DBConn () {
+
     }
+
     public void connect() {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -32,5 +35,9 @@ public abstract class DBConn {
         {
             throw new RuntimeException("Unable to connect", e);
         }
+    }
+
+    public Connection getConn() {
+        return this.conn;
     }
 }
