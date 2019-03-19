@@ -25,47 +25,47 @@
       <Text layoutX="31.0" layoutY="501.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gjennomsnitlig personlig form" wrappingWidth="232.2534151673317" />
       <HBox layoutX="24.0" layoutY="86.0" prefHeight="40.0" prefWidth="422.0">
          <children>
-            <TextField id="regTreningField" prefHeight="27.0" prefWidth="248.0" promptText=" (tidsstempel, varighet, personligForm, personligPrestasjon, notat) (tidsstempel, varighet, personligForm, personligPrestasjon, notat)" />
-            <Button id="regTreningButton" mnemonicParsing="false" text=" Registrer treningsøkt" />
+            <TextField fx:id="regTreningField" prefHeight="27.0" prefWidth="248.0" promptText=" (tidsstempel, varighet, personligForm, personligPrestasjon, notat) (tidsstempel, varighet, personligForm, personligPrestasjon, notat)" />
+            <Button fx:id="regTreningButton" mnemonicParsing="false" onAction="#registrerTreningsokt" text=" Registrer treningsøkt" />
          </children>
       </HBox>
       <HBox layoutX="25.0" layoutY="136.0" prefHeight="27.0" prefWidth="398.0">
          <children>
-            <TextField id="regOvelseField" prefHeight="27.0" prefWidth="391.0" promptText="(navn, resultat)" />
-            <Button id="regOvelseButton" mnemonicParsing="false" onAction="#registrerOvelse" prefHeight="27.0" prefWidth="291.0" text="Registrer øvelse" />
+            <TextField fx:id="regOvelseField" prefHeight="27.0" prefWidth="391.0" promptText="(navn, resultat)" />
+            <Button fx:id="regOvelseButton" mnemonicParsing="false" onAction="#registrerOvelse" prefHeight="27.0" prefWidth="291.0" text="Registrer øvelse" />
          </children>
       </HBox>
       <HBox layoutX="25.0" layoutY="180.0" prefHeight="40.0" prefWidth="411.0">
          <children>
-            <TextField id="regApparatField" prefHeight="27.0" prefWidth="248.0" promptText="(apparatID, apparatnavn)" />
-            <Button id="regApparatButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="Registrer apparat" />
+            <TextField fx:id="regApparatField" prefHeight="27.0" prefWidth="248.0" promptText="(apparatID, apparatnavn)" />
+            <Button fx:id="regApparatButton" mnemonicParsing="false" onAction="#registrerApperat" prefHeight="27.0" prefWidth="151.0" text="Registrer apparat" />
          </children>
       </HBox>
       <HBox layoutX="26.0" layoutY="260.0" prefHeight="27.0" prefWidth="422.0">
          <children>
-            <TextField id="nSisteOktField" prefHeight="27.0" prefWidth="248.0" promptText="antall" />
-            <Button id="nSisteOktButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="Få n siste økter" />
+            <TextField fx:id="nSisteOktField" prefHeight="27.0" prefWidth="248.0" promptText="antall" />
+            <Button fx:id="nSisteOktButton" mnemonicParsing="false" onAction="#getnSisteOkt" prefHeight="27.0" prefWidth="151.0" text="Få n siste økter" />
          </children>
       </HBox>
       <HBox layoutX="26.0" layoutY="315.0" prefHeight="27.0" prefWidth="398.0">
          <children>
-            <TextField id="resultLoggField" prefHeight="27.0" prefWidth="248.0" promptText="(øvelse, startstidspunkt, slutttidspunkt" />
-            <Button id="resultLoggButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="Få resultatlogg" />
+            <TextField fx:id="resultLoggField" prefHeight="27.0" prefWidth="248.0" promptText="(øvelse, startstidspunkt, slutttidspunkt" />
+            <Button fx:id="resultLoggButton" mnemonicParsing="false" onAction="#getResultatlogg" prefHeight="27.0" prefWidth="151.0" text="Få resultatlogg" />
          </children>
       </HBox>
       <HBox layoutX="26.0" layoutY="379.0" prefHeight="27.0" prefWidth="398.0">
          <children>
-            <TextField id="regOvelsegruppeField" prefHeight="27.0" prefWidth="248.0" promptText="(gruppe, øvelsesnavn)" />
-            <Button id="regOvelsegruppeButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="Registrer øvelsegruppe" />
+            <TextField fx:id="regOvelsegruppeField" prefHeight="27.0" prefWidth="248.0" promptText="(gruppe, øvelsesnavn)" />
+            <Button fx:id="regOvelsegruppeButton" mnemonicParsing="false" onAction="#registrerOvelsegruppe" prefHeight="27.0" prefWidth="151.0" text="Registrer øvelsegruppe" />
          </children>
       </HBox>
       <HBox layoutX="26.0" layoutY="433.0" prefHeight="27.0" prefWidth="398.0">
          <children>
-            <TextField id="sloOppField" prefHeight="27.0" prefWidth="248.0" promptText="Øvelsesgruppe" />
-            <Button id="sloOppButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="Slå opp" />
+            <TextField fx:id="sloOppField" prefHeight="27.0" prefWidth="248.0" promptText="Øvelsesgruppe" />
+            <Button fx:id="sloOppButton" mnemonicParsing="false" onAction="#getOvelse" prefHeight="27.0" prefWidth="151.0" text="Slå opp" />
          </children>
       </HBox>
-      <Button id="personligFormButton" layoutX="283.0" layoutY="483.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="Personlig form" />
-      <TextArea id="tekstFelt" layoutX="477.0" layoutY="84.0" prefHeight="425.0" prefWidth="200.0" />
+      <Button fx:id="personligFormButton" layoutX="283.0" layoutY="483.0" mnemonicParsing="false" onAction="#getGjennomsnitt" prefHeight="27.0" prefWidth="151.0" text="Personlig form" />
+      <TextArea fx:id="tekstFelt" layoutX="477.0" layoutY="84.0" prefHeight="425.0" prefWidth="200.0" />
    </children>
 </AnchorPane>
