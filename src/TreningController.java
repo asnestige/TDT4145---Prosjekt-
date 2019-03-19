@@ -29,7 +29,7 @@ public class TreningController {
     Connection myConn;
 
     public void initialize() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
-        this.myConn = DBConn.getConn();
+        this.myConn = DBConn.conn;
 
     }
 
@@ -50,6 +50,10 @@ public class TreningController {
         }
 
     }
+
+
+
+
     @FXML
     public void registrerApperat() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
@@ -66,36 +70,57 @@ public class TreningController {
 
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
         }
-
     }
 
+
+
+
+
+    //hjelper til å lage Timestamp-instans av en string vi får inn på bestemt format "dd.mm.yyyy hh:mm:ss:nn"
+    public Timestamp makeTimetamp(List<String> input) {
+
+        List<String> datoString = Arrays.asList(input.get(0).split("."));
+        int ar = Integer.parseInt(datoString.get(2));
+        int maned = Integer.parseInt(datoString.get(1));
+        int dag = Integer.parseInt(datoString.get(0));
+
+        List<String> tidString = Arrays.asList(input.get(1).split(":"));
+        int time = Integer.parseInt(tidString.get(0));
+        int minutt = Integer.parseInt(tidString.get(1));
+
+        return new Timestamp(ar, maned, dag, time, minutt,0,0);
+    }
+
+
+
+
+
+
     @FXML
-    public void registrerTreningsokt(){
-
+    public void registrerTreningsokt() throws SQLException{
         try {
-            List<String> input = Arrays.asList(regTreningField.getText().split(","));
+            List<String> input = Arrays.asList(regTreningField.getText().split(" "));
 
-
-            List<String> dateString = Arrays.asList(input.get(0).split("-"));
-            int ar = Integer.parseInt(dateString.get(0));
-            int maned = Integer.parseInt(dateString.get(1));
-            int dag = Integer.parseInt(dateString.get(2));
-            Date dato = new Date(ar - 1900, maned - 1, dag);
-            Time tid = Time.valueOf(input.get(1));
-
+            Timestamp timestamp = makeTimetamp(input);
 
             int varighet = Integer.parseInt(input.get(2));
-            int personligform = Integer.parseInt(input.get(3));
-            int prestasjon = Integer.parseInt(input.get(4));
+            int personligForm = Integer.parseInt(input.get(3));
+            int personligPrestasjon = Integer.parseInt(input.get(4));
             String notat = input.get(5);
+
+            AdminController.settInnTreningsokt(myConn, timestamp, varighet, personligForm, personligPrestasjon, notat);
         }
 
         catch (RuntimeException e){
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
         }
-
-
     }
+
+
+
+
+
+
     // 2. Få opp informasjon om et antall n sist gjennomførte treningsøkter med notater, der n spesifiseres av brukeren.
     @FXML
     public void getnSisteOkt() throws NumberFormatException, SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException{
@@ -118,36 +143,33 @@ public class TreningController {
         }
     }
 
+
+
+
+
     // 3. For hver enkelt øvelse skal det være mulig å se en resultatlogg i et gitt tidsintervall
     @FXML
     public void getResultatlogg() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
         try {
             List<String> input = Arrays.asList(resultLoggField.getText().split(","));
-            List<String> startDate = Arrays.asList(input.get(1).split("-"));
-            List<String> endDate = Arrays.asList(input.get(2).split("-"));
+            List<String> start = Arrays.asList(input.get(1).split(" "));
+            List<String> slutt = Arrays.asList(input.get(2).split(" "));
             String ovelseNavn = input.get(0);
 
-    //finne start timestamp
-            int startAr = Integer.parseInt(startDate.get(2));
-            int startManed = Integer.parseInt(startDate.get(1));
-            int startDag = Integer.parseInt(startDate.get(0));
+            //finne start timestamp
 
-            Timestamp dateStart = new Timestamp(startAr, startManed, startDag,0,0,0,0);
+            Timestamp fra = makeTimetamp(start);
 
-    //finne end timestamp
-            int endAr = Integer.parseInt(endDate.get(2));
-            int endManed = Integer.parseInt(endDate.get(1));
-            int endDag = Integer.parseInt(endDate.get(0));
-
-            Timestamp dateEnd = new Timestamp(endAr, endManed, endDag,0,0,0,0);
+            //finne end timestamp
+            Timestamp til = makeTimetamp(slutt);
 
             String resultatlogg = "";
-            List<String> results = AdminController.getResultatlogg(myConn, ovelseNavn, dateStart, dateEnd);
+            List<String> results = AdminController.getResultatlogg(myConn, ovelseNavn, fra, til);
+
             for (String result: results ){
                 resultatlogg += result;
             }
             tekstFelt.setText(resultatlogg);
-
         }
         catch (RuntimeException e) {
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
@@ -168,8 +190,9 @@ public class TreningController {
         catch (RuntimeException e) {
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
         }
+    }
 
-        }
+
 
     @FXML
     public void getOvelse() throws SQLException{
