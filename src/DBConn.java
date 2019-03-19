@@ -1,27 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author Svein Erik
- */
-
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public protected class DBConn {
-
-    public Connection conn;
+public abstract class DBConn {
+    protected Connection conn;
 
     public DBConn () {
-
     }
-
     public void connect() {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -35,9 +22,5 @@ public protected class DBConn {
         {
             throw new RuntimeException("Unable to connect", e);
         }
-    }
-
-    public Connection getConn() {
-        return this.conn;
     }
 }
