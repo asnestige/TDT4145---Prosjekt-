@@ -4,12 +4,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public abstract class DBConn {
-    protected Connection conn;
+public class DBConn {
 
-    public DBConn () {
-    }
-    public void connect() {
+    public static Connection connect() {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             // Properties for user and password. Here the user and password are both 'paulr'
@@ -17,10 +14,14 @@ public abstract class DBConn {
             p.put("user", "heddasu_db");
             p.put("password", "yulve123");
             //            conn = DriverManager.getConnection("jdbc:mysql://mysql.ansatt.ntnu.no/sveinbra_ektdb?autoReconnect=true&useSSL=false",p);
-            this.conn = DriverManager.getConnection("jdbc:mysql://mysql.stud.ntnu.no/heddasu_dbkissa/ekt?autoReconnect=true&useSSL=false",p);
-        } catch (Exception e)
-        {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://mysql.stud.ntnu.no/heddasu_dbkissa/ekt?autoReconnect=true&useSSL=false",p);
+            return conn;
+
+        } catch (Exception e)  {
             throw new RuntimeException("Unable to connect", e);
         }
     }
+
+
+
 }
