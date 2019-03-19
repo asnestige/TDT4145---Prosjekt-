@@ -16,36 +16,36 @@ public class AdminController {
 
     //1. Registrere apparater, øvelser og treningsøkter med tilhørende data.
 
-    public static void settInnTreningsokt(Connection conn, Timestamp tidsstempel, int varighet, int personligForm, int personligPrestasjon, String notat) throws SQLException {
+    public static void settInnTreningsokt(Connection conn, Timestamp tidsstempel, double varighet, int personligForm, int personligPrestasjon, String notat) throws SQLException {
         String preQueryStatement = "INSERT INTO treningsøkt (Tidsstempel, Varighet, Form, Prestasjon, Notat) values (?,?,?,?,?)";
         PreparedStatement prepState= conn.prepareStatement(preQueryStatement);
 
         prepState.setTimestamp(1, tidsstempel);
-        prepState.setInt(2, varighet);
+        prepState.setDouble(2, varighet);
         prepState.setInt(3, personligForm);
         prepState.setInt(4, personligPrestasjon);
         prepState.setString(5, notat);
-        prepState.executeQuery();
+        prepState.execute();
     }
 
 
-    public static void settInnOvelse(Connection conn, String navn, String beskrivelse) throws SQLException {
-        String preQueryStatement = "INSERT INTO øvelse (Navn, Beskrivelse) values (?,?)";
+    public static void settInnOvelse(Connection conn, String navn, String resultat) throws SQLException {
+        String preQueryStatement = "INSERT INTO øvelse (Navn, Resultat) values (?,?)";
         PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
 
         prepState.setString(1,navn);
-        prepState.setString(2, beskrivelse);
-        prepState.executeQuery();
+        prepState.setString(2, resultat);
+        prepState.execute();
     }
 
     public static void settInnApparat(Connection conn, int apparatID, String apparatNavn) throws SQLException {
 
-        String preQueryStatement = "INSERT INTO Apparat (ApparatID, ApparatNavn) values (?,?)";
+        String preQueryStatement = "INSERT INTO apparat (ApparatID, Apparatnavn) values (?,?)";
         PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
 
         prepState.setInt(1, apparatID);
         prepState.setString(2, apparatNavn);
-        prepState.executeQuery();
+        prepState.execute();
     }
 
 
@@ -69,7 +69,7 @@ public class AdminController {
             okter.add(okt);
 
         }
-        prepState.executeQuery();
+        prepState.execute();
         return okter;
     }
 
@@ -110,7 +110,7 @@ public class AdminController {
 
         prepState.setString(1, ovelsegruppenavn);
         prepState.setString(2, muskelgruppe);
-        prepState.executeQuery();
+        prepState.execute();
     }
 
 

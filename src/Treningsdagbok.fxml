@@ -38,7 +38,7 @@
       <HBox layoutX="25.0" layoutY="180.0" prefHeight="40.0" prefWidth="411.0">
          <children>
             <TextField fx:id="regApparatField" prefHeight="27.0" prefWidth="248.0" promptText="(apparatID, apparatnavn)" />
-            <Button fx:id="regApparatButton" mnemonicParsing="false" onAction="#registrerApperat" prefHeight="27.0" prefWidth="151.0" text="Registrer apparat" />
+            <Button fx:id="regApparatButton" mnemonicParsing="false" onAction="#registrerApparat" prefHeight="27.0" prefWidth="151.0" text="Registrer apparat" />
          </children>
       </HBox>
       <HBox layoutX="26.0" layoutY="260.0" prefHeight="27.0" prefWidth="422.0">

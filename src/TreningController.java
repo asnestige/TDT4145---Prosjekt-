@@ -37,8 +37,9 @@ public class TreningController {
     try{
         List<String> input = Arrays.asList(regOvelseField.getText().split(","));
         String navn = input.get(0);
-        System.out.print(navn);
+        System.out.println(navn);
         String beskrivelse = input.get(1);
+        System.out.println(beskrivelse);
         AdminController.settInnOvelse(myConn, navn, beskrivelse);
         tekstFelt.setText("Exercise added");
         }
@@ -52,12 +53,12 @@ public class TreningController {
 
 
     @FXML
-    public void registrerApperat() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void registrerApparat() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
         try {
             List<String> input = Arrays.asList(regApparatField.getText().split(","));
-            String navn = input.get(0);
-            int apparatID = Integer. parseInt(input.get(1));
+            String navn = input.get(1);
+            int apparatID = Integer. parseInt(input.get(0));
             //legg til apparat
             AdminController.settInnApparat(myConn, apparatID, navn);
             tekstFelt.setText("Machine added");
@@ -65,6 +66,7 @@ public class TreningController {
         }
 
         catch (RuntimeException e){
+            System.out.println(e);
 
 
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
@@ -77,8 +79,8 @@ public class TreningController {
 
     //hjelper til å lage Timestamp-instans av en string vi får inn på bestemt format "dd.mm.yyyy hh:mm:ss:nn"
     public Timestamp makeTimetamp(List<String> input) {
+        List<String> datoString = Arrays.asList(input.get(0).split("-"));
 
-        List<String> datoString = Arrays.asList(input.get(0).split("."));
         int ar = Integer.parseInt(datoString.get(2));
         int maned = Integer.parseInt(datoString.get(1));
         int dag = Integer.parseInt(datoString.get(0));
@@ -87,7 +89,7 @@ public class TreningController {
         int time = Integer.parseInt(tidString.get(0));
         int minutt = Integer.parseInt(tidString.get(1));
 
-        return new Timestamp(ar, maned, dag, time, minutt,0,0);
+        return new Timestamp(ar-1900, maned-1, dag, time, minutt,0,0);
     }
 
 
@@ -97,21 +99,28 @@ public class TreningController {
 
     @FXML
     public void registrerTreningsokt() throws SQLException{
+
         try {
-            List<String> input = Arrays.asList(regTreningField.getText().split(" "));
+            List<String> input = Arrays.asList(regTreningField.getText().split(","));
 
-            Timestamp timestamp = makeTimetamp(input);
+            List<String> tidListe = Arrays.asList(input.get(0).split(" "));
+            Timestamp timestamp = makeTimetamp(tidListe);
 
-            int varighet = Integer.parseInt(input.get(2));
-            int personligForm = Integer.parseInt(input.get(3));
-            int personligPrestasjon = Integer.parseInt(input.get(4));
-            String notat = input.get(5);
+            double varighet = Double.parseDouble(input.get(1).trim());
+            int personligForm = Integer.parseInt(input.get(2).trim());
+            int personligPrestasjon = Integer.parseInt(input.get(3).trim());
+            String notat = input.get(4);
+            System.out.println(timestamp);
+
 
             AdminController.settInnTreningsokt(myConn, timestamp, varighet, personligForm, personligPrestasjon, notat);
+            tekstFelt.setText("Treningsøkten er registrert!");
         }
 
         catch (RuntimeException e){
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
+            System.out.println(e);
+
         }
     }
 
@@ -125,7 +134,7 @@ public class TreningController {
     public void getnSisteOkt() throws NumberFormatException, SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException{
         try {
             List<Treningsokt> treningsokter = AdminController.getNOkter(myConn, Integer.parseInt(nSisteOktField.getText()));
-            String result = "Date \t\t tidspunkt \t varighet \t Form \t Prestasjon \t Notat\n";
+            String result = "Dato \t\t Tidspunkt \t Varighet \t Form \t Prestasjon \t Notat\n";
 
             for(Treningsokt treningsokt : treningsokter ) {
                 result += treningsokt.getTidsstempel().toString() + "\t";
