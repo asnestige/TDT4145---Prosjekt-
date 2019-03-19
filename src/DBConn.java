@@ -1,27 +1,26 @@
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class DBConn {
+public final class DBConn {
 
-    public static Connection connect() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            // Properties for user and password. Here the user and password are both 'paulr'
-            Properties p = new Properties();
-            p.put("user", "heddasu_db");
-            p.put("password", "yulve123");
-            //            conn = DriverManager.getConnection("jdbc:mysql://mysql.ansatt.ntnu.no/sveinbra_ektdb?autoReconnect=true&useSSL=false",p);
-            Connection conn = DriverManager.getConnection("jdbc:mysql://mysql.stud.ntnu.no/heddasu_dbkissa/ekt?autoReconnect=true&useSSL=false",p);
-            return conn;
 
-        } catch (Exception e)  {
-            throw new RuntimeException("Unable to connect", e);
-        }
+    // Statisk funksjon som kan brukes for aa koble seg opp mot databasen.
+    // Passord og brukernavn ligger i koden, mulig det skal gaa inn som startargs eller env. variabler
+    public static Connection getDBConnection() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+        String url = "jdbc:mysql://mysql.stud.ntnu.no/heddasu_dbkissa?autoReconnect=true&useSSL=false";
+        String user = "heddasu_db";
+        String pass = "yulve123";
+
+        Properties p = new Properties();
+        p.put("user", user);
+        p.put("password", pass);
+
+        Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+        Connection conn = DriverManager.getConnection (url, p);
+
+        return conn;
     }
-
-
 
 }
