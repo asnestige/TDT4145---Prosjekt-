@@ -136,6 +136,16 @@ public class AdminController {
         prepState.execute();
     }
 
+    public static void settInnOvelseIGruppe(Connection conn, int gruppeID, int ovelseID) throws SQLException{
+        String preQueryStatement = "INSERT INTO inngåri (gruppeID, ovelseID) VALUES (?, ?)";
+        PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
+
+        prepState.setInt(1, gruppeID);
+        prepState.setInt(2, ovelseID);
+        prepState.execute();
+
+    }
+
 
 
     public static List<Ovelse> getOvelsegruppe(Connection conn, String ovelsegruppenavn) throws SQLException{
