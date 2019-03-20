@@ -15,29 +15,29 @@
             <Font name="Avenir Book" size="29.0" />
          </font>
       </Text>
-      <Text layoutX="23.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dd.mm.yyyy HH:mm, varighet, form, prestasjon, notat" />
-      <Text layoutX="23.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Navn, resultat, ØktID" />
-      <Text layoutX="23.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="23.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dd.mm.yyyy HH:mm, Varighet, Form, Prestasjon, Notat" />
+      <Text layoutX="23.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Navn, resultat" />
+      <Text layoutX="23.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Apparatnavn" />
       <Text layoutX="26.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hent ut n siste treningsøkter" />
       <Text layoutX="26.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vis reultatlogg" />
-      <Text layoutX="23.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrer øvelsesgruppe" wrappingWidth="158.2534151673317" />
+      <Text layoutX="24.0" layoutY="375.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lag en  ny øvelsesgruppe" wrappingWidth="211.06198343634605" />
       <Text layoutX="23.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Slå opp gruppe" wrappingWidth="158.2534151673317" />
       <Text layoutX="31.0" layoutY="501.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gjennomsnitlig personlig form" wrappingWidth="232.2534151673317" />
       <HBox layoutX="24.0" layoutY="86.0" prefHeight="40.0" prefWidth="422.0">
          <children>
-            <TextField fx:id="regTreningField" prefHeight="27.0" prefWidth="248.0" promptText=" (tidsstempel, varighet, personligForm, personligPrestasjon, notat) (tidsstempel, varighet, personligForm, personligPrestasjon, notat)" />
+            <TextField fx:id="regTreningField" prefHeight="27.0" prefWidth="248.0" promptText=" Tidsstempel, Varighet, Form, Prestasjon, Notat" />
             <Button fx:id="regTreningButton" mnemonicParsing="false" onAction="#registrerTreningsokt" text=" Registrer treningsøkt" />
          </children>
       </HBox>
       <HBox layoutX="25.0" layoutY="136.0" prefHeight="27.0" prefWidth="398.0">
          <children>
-            <TextField fx:id="regOvelseField" prefHeight="27.0" prefWidth="391.0" promptText="(navn, resultat, ØktID)" />
+            <TextField fx:id="regOvelseField" prefHeight="27.0" prefWidth="391.0" promptText="Navn, Resulat" />
             <Button fx:id="regOvelseButton" mnemonicParsing="false" onAction="#registrerOvelse" prefHeight="27.0" prefWidth="291.0" text="Registrer øvelse" />
          </children>
       </HBox>
       <HBox layoutX="25.0" layoutY="180.0" prefHeight="40.0" prefWidth="411.0">
          <children>
-            <TextField fx:id="regApparatField" prefHeight="27.0" prefWidth="248.0" promptText="(apparatID, apparatnavn)" />
+            <TextField fx:id="regApparatField" prefHeight="27.0" prefWidth="248.0" promptText="ApparatNavn" />
             <Button fx:id="regApparatButton" mnemonicParsing="false" onAction="#registrerApparat" prefHeight="27.0" prefWidth="151.0" text="Registrer apparat" />
          </children>
       </HBox>
@@ -49,19 +49,19 @@
       </HBox>
       <HBox layoutX="26.0" layoutY="315.0" prefHeight="27.0" prefWidth="398.0">
          <children>
-            <TextField fx:id="resultLoggField" prefHeight="27.0" prefWidth="248.0" promptText="(øvelse, startstidspunkt, slutttidspunkt" />
+            <TextField fx:id="resultLoggField" prefHeight="27.0" prefWidth="248.0" promptText="Øvelse, ØktID start, ØktIDslutt" />
             <Button fx:id="resultLoggButton" mnemonicParsing="false" onAction="#getResultatlogg" prefHeight="27.0" prefWidth="151.0" text="Få resultatlogg" />
          </children>
       </HBox>
       <HBox layoutX="26.0" layoutY="379.0" prefHeight="27.0" prefWidth="398.0">
          <children>
-            <TextField fx:id="regOvelsegruppeField" prefHeight="27.0" prefWidth="248.0" promptText="(gruppe, øvelsesnavn)" />
-            <Button fx:id="regOvelsegruppeButton" mnemonicParsing="false" onAction="#registrerOvelsegruppe" prefHeight="27.0" prefWidth="151.0" text="Registrer øvelsegruppe" />
+            <TextField fx:id="regOvelsegruppeField" prefHeight="27.0" prefWidth="248.0" promptText="Gruppenavn, muskelgruppe" />
+            <Button fx:id="regOvelsegruppeButton" mnemonicParsing="false" onAction="#registrerOvelsegruppe" prefHeight="27.0" prefWidth="151.0" text="Lag øvelsegruppe" />
          </children>
       </HBox>
       <HBox layoutX="26.0" layoutY="433.0" prefHeight="27.0" prefWidth="398.0">
          <children>
-            <TextField fx:id="sloOppField" prefHeight="27.0" prefWidth="248.0" promptText="Øvelsesgruppe" />
+            <TextField fx:id="sloOppField" prefHeight="27.0" prefWidth="248.0" promptText="Øvelsesgruppenavn" />
             <Button fx:id="sloOppButton" mnemonicParsing="false" onAction="#getOvelse" prefHeight="27.0" prefWidth="151.0" text="Slå opp" />
          </children>
       </HBox>
