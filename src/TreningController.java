@@ -227,19 +227,19 @@ public class TreningController {
 
     // 5. Finne gjennomsnittlig personlig form
     @FXML
-    public void getGjennomsnitt()  throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
+    public void getGjennomsnitt() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 
-        List<Treningsokt> treningsokter = AdminController.getNOkter(myConn, Integer.parseInt(nSisteOktField.getText()));
-        int result = 0;
-        for(Treningsokt treningsokt : treningsokter ){
+        List<Treningsokt> treningsokter = AdminController.getNOkter(myConn, AdminController.getAntallOkter((myConn)));
+        double result = 0.0;
+        System.out.println("LENGDE: " +treningsokter.size());
+        for (Treningsokt treningsokt : treningsokter) {
             result += treningsokt.getPersonligForm();
+            System.out.println(result);
         }
-        int gjennomsnitt = result/treningsokter.size();
+        double gjennomsnitt = result / treningsokter.size();
 
         tekstFelt.setText(String.valueOf(gjennomsnitt));
     }
-
-
 
 }
 

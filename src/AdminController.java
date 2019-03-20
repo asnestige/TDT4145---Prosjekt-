@@ -170,19 +170,17 @@ public class AdminController {
             }
         }
         return ovelse;
-
-//        Map<String, ArrayList<Ovelse>> inngari = new HashMap<String, ArrayList<Ovelse>>();
-//        while (rs.next()) {
-//            if(inngari.containsKey(rs.getString("Øvelsegruppenavn"))) {
-//                return inngari.get(rs.getString("Øvelsegruppenavn"));
-//            }
-//            else {
-//                Ovelse ovelse = new Ovelse(rs.getString("Navn"), rs.getString("Notat"));
-//                inngari.put(rs.getString("Øvelsegruppenavn"), new ArrayList<Ovelse>(Arrays.asList(ovelse)));
-//            }
-//        }
-//        return inngari.get(rs.getString("Øvelsegruppenavn"));
     }
 
+    public static int getAntallOkter(Connection conn) throws SQLException{
+        String preQueryStatement = "SELECT * FROM treningsøkt";
+        PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
+        ResultSet rs = prepState.executeQuery();
+
+        rs.last();
+        int count = rs.getRow();
+        System.out.println("COUNT: " + count);
+        return count;
+    }
 
 }
