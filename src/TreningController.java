@@ -217,15 +217,9 @@ public class TreningController {
     public void getOvelse() throws SQLException{
         String result = "";
         String input = sloOppField.getText();
-<<<<<<< HEAD
         List<Ovelse> g = AdminController.getOvelsegruppe(myConn, input);
         for (Ovelse ovelse: g){
             result += ovelse.toString() + "\n";
-=======
-        List<String> g = AdminController.getOvelsegruppe(myConn, input);
-        for (String ovelse: g){
-            result += ovelse+"\n";
->>>>>>> 71f28e79afb02a5a48a61dcab7e9e4e3128b5ba0
         }
         tekstFelt.setText(result);
 
