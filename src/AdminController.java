@@ -60,13 +60,12 @@ public class AdminController {
         prepState.execute();
     }
 
-    public static void settInnApparat(Connection conn, int apparatID, String apparatNavn) throws SQLException {
+    public static void settInnApparat(Connection conn, String apparatNavn) throws SQLException {
 
-        String preQueryStatement = "INSERT INTO apparat (ApparatID, Apparatnavn) values (?,?)";
+        String preQueryStatement = "INSERT INTO apparat (Apparatnavn) values (?)";
         PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
 
-        prepState.setInt(1, apparatID);
-        prepState.setString(2, apparatNavn);
+        prepState.setString(1, apparatNavn);
         prepState.execute();
     }
 
@@ -146,6 +145,7 @@ public class AdminController {
         prepState.execute();
 
     }
+
 
 
     public static List<Ovelse> getOvelsegruppe(Connection conn, String ovelsegruppenavn) throws SQLException{

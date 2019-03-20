@@ -55,10 +55,8 @@ public class TreningController {
 
         try {
             List<String> input = Arrays.asList(regApparatField.getText().split(","));
-            String navn = input.get(1).trim();
-            int apparatID = Integer. parseInt(input.get(0).trim());
-            //legg til apparat
-            AdminController.settInnApparat(myConn, apparatID, navn);
+            String navn = input.get(0).trim();
+            AdminController.settInnApparat(myConn, navn);
             tekstFelt.setText("Machine added");
 
         }
@@ -200,6 +198,7 @@ public class TreningController {
             int ovelseID = Integer.valueOf(input.get(1).trim());
             AdminController.settInnOvelseIGruppe(myConn, gruppeID, ovelseID);
             tekstFelt.setText("Øvelse er lagt til i gruppe");
+
 
         }catch (RuntimeException e) {
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
