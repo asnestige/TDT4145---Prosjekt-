@@ -37,7 +37,15 @@ public class AdminController {
         int siste = 0;
         while (rs.next()) {
             siste = rs.getInt("ØktID");
-            System.out.println(siste);
+        }
+
+        String sisteOvelse = "SELECT ØvelseID FROM øvelse ORDER BY ØvelseID DESC LIMIT 1";
+        PreparedStatement prepState2 = conn.prepareStatement(sisteOvelse);
+        ResultSet rs2 = prepState2.executeQuery();
+
+        int denneOvelsen = 0;
+        while (rs2.next()) {
+            denneOvelsen = rs2.getInt("ØvelseID");
         }
 
         String preQueryStatement = "INSERT INTO øvelse (Navn, Resultat) values (?,?)";
@@ -47,16 +55,17 @@ public class AdminController {
         prepState1.setString(2, resultat);
         prepState1.execute();
 
-        settInnOvelseUtfort(conn, siste, navn);
+        settInnOvelseUtfort(conn, siste, denneOvelsen+1);
 
     }
 
-    public static void settInnOvelseUtfort(Connection conn, int oktID, String navn) throws SQLException{
-        String tilRelasjon = "INSERT INTO øvelseutført (ØktID, Navn) VALUES (?,?)";
+    public static void settInnOvelseUtfort(Connection conn, int oktID, int ovelseID) throws SQLException{
+
+        String tilRelasjon = "INSERT INTO øvelseutført (ØktID, ØvelseID) VALUES (?,?)";
         PreparedStatement prepState = conn.prepareStatement(tilRelasjon);
 
         prepState.setInt(1,oktID);
-        prepState.setString(2,navn);
+        prepState.setInt(2,ovelseID);
         prepState.execute();
     }
 
@@ -137,7 +146,7 @@ public class AdminController {
     }
 
     public static void settInnOvelseIGruppe(Connection conn, int gruppeID, int ovelseID) throws SQLException{
-        String preQueryStatement = "INSERT INTO inngåri (gruppeID, ovelseID) VALUES (?, ?)";
+        String preQueryStatement = "INSERT INTO inngåri (GruppeID, ØvelseID) VALUES (?, ?)";
         PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
 
         prepState.setInt(1, gruppeID);

@@ -194,13 +194,18 @@ public class TreningController {
     public void leggTilOvelseIGruppe() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         try {
             List<String> input = Arrays.asList(leggTilOvelseIGruppeField.getText().split(","));
+
+            System.out.println(input);
+
             int gruppeID = Integer.parseInt(input.get(0).trim());
-            int ovelseID = Integer.valueOf(input.get(1).trim());
+            int ovelseID = Integer.parseInt(input.get(1).trim());
             AdminController.settInnOvelseIGruppe(myConn, gruppeID, ovelseID);
             tekstFelt.setText("Exercise added to exercise group.");
 
         }catch (RuntimeException e) {
+            System.out.println(e);
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
+
         }
 
 
