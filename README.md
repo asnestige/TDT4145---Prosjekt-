@@ -1,6 +1,5 @@
 # TDT4145 - Datamodellering og databasesystemer 
-# Prosjekt 2019
-Gruppeprosjekt i TDT4145.
+Gruppeprosjekt i TDT4145 2019.
 
 # Læringsmål for prosjektet er å:
 - Få praktisk trening i å programmere med SQL og JDBC opp mot en database.
