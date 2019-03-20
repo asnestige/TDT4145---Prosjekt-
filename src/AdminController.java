@@ -152,30 +152,36 @@ public class AdminController {
         prepState.setInt(1, gruppeID);
         prepState.setInt(2, ovelseID);
         prepState.execute();
-
     }
 
 
 
-    public static List<Ovelse> getOvelsegruppe(Connection conn, String ovelsegruppenavn) throws SQLException{
-        String preQueryStatement = "SELECT * FROM (øvelsegruppe NATURAL JOIN inngåri NATURAL JOIN øvelsegruppe) WHERE Øvelsegruppenavn = ?";
+    public static List<String> getOvelsegruppe(Connection conn, String ovelsegruppenavn) throws SQLException{
+        String preQueryStatement = "SELECT * FROM (øvelsegruppe NATURAL JOIN inngåri NATURAL JOIN øvelse) WHERE Øvelsegruppenavn = ?";
         PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
 
         prepState.setString(1, ovelsegruppenavn);
         ResultSet rs = prepState.executeQuery();
 
-        //Lager en map der Ovelsegruppenavn er key, og liste med navnene til Ovelser er value
-        Map<String, ArrayList<Ovelse>> inngåri = new HashMap<String, ArrayList<Ovelse>>();
-        while (rs.next()) {
-            if(inngåri.containsKey(rs.getString("Øvelsegruppenavn"))) {
-                return inngåri.get(rs.getString("Øvelsegruppenavn"));
-            }
-            else {
-                Ovelse ovelse = new Ovelse(rs.getString("Navn"), rs.getString("Notat"));
-                inngåri.put(rs.getString("Øvelsegruppenavn"), new ArrayList<Ovelse>(Arrays.asList(ovelse)));
+        List<String> ovelse = new ArrayList<String>();
+        while(rs.next()) {
+            if(rs.getString("Øvelsegruppenavn").equals(ovelsegruppenavn)) {
+                ovelse.add(rs.getString("Navn"));
             }
         }
-        return inngåri.get(rs.getString("Øvelsegruppenavn"));
+        return ovelse;
+
+//        Map<String, ArrayList<Ovelse>> inngari = new HashMap<String, ArrayList<Ovelse>>();
+//        while (rs.next()) {
+//            if(inngari.containsKey(rs.getString("Øvelsegruppenavn"))) {
+//                return inngari.get(rs.getString("Øvelsegruppenavn"));
+//            }
+//            else {
+//                Ovelse ovelse = new Ovelse(rs.getString("Navn"), rs.getString("Notat"));
+//                inngari.put(rs.getString("Øvelsegruppenavn"), new ArrayList<Ovelse>(Arrays.asList(ovelse)));
+//            }
+//        }
+//        return inngari.get(rs.getString("Øvelsegruppenavn"));
     }
 
 
