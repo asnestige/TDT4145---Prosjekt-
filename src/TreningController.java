@@ -39,7 +39,7 @@ public class TreningController {
         String navn = input.get(0).trim();
         String beskrivelse = input.get(1).trim();
         AdminController.settInnOvelse(myConn, navn, beskrivelse);
-        tekstFelt.setText("Exercise added");
+        tekstFelt.setText( navn + " er nå lagt til");
         }
         catch (RuntimeException e) {
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
@@ -57,7 +57,7 @@ public class TreningController {
             List<String> input = Arrays.asList(regApparatField.getText().split(","));
             String navn = input.get(0).trim();
             AdminController.settInnApparat(myConn, navn);
-            tekstFelt.setText("Machine added");
+            tekstFelt.setText( navn + " er nå lagt til");
 
         }
 
@@ -183,7 +183,7 @@ public class TreningController {
             String navn = input.get(0).trim();
             String muskelgruppe = input.get(1).trim();
             AdminController.settInnOvelsegruppe(myConn, navn, muskelgruppe);
-            tekstFelt.setText("ExerciseGroup added");
+            tekstFelt.setText( navn + " er nå lagt til!");
         }
         catch (RuntimeException e) {
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
