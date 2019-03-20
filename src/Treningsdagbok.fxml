@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="706.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TreningController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="706.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TreningController">
    <children>
       <Text fill="#2946ab" layoutX="44.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Treningsdagbok">
          <font>
@@ -17,12 +17,12 @@
       </Text>
       <Text layoutX="23.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dd.mm.yyyy HH:mm, varighet, form, prestasjon, notat" />
       <Text layoutX="23.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Navn, resultat" />
-      <Text layoutX="23.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="23.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="apparatID, apparatnavn" />
       <Text layoutX="26.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hent ut n siste treningsøkter" />
       <Text layoutX="26.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vis reultatlogg" />
-      <Text layoutX="23.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrer øvelsesgruppe" wrappingWidth="158.2534151673317" />
+      <Text layoutX="23.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="gruppe, øvelsesnavn" wrappingWidth="158.2534151673317" />
       <Text layoutX="23.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Slå opp gruppe" wrappingWidth="158.2534151673317" />
-      <Text layoutX="31.0" layoutY="501.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gjennomsnitlig personlig form" wrappingWidth="232.2534151673317" />
+      <Text layoutX="31.0" layoutY="501.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gjennomsnitlig personlig form:" wrappingWidth="232.2534151673317" />
       <HBox layoutX="24.0" layoutY="86.0" prefHeight="40.0" prefWidth="422.0">
          <children>
             <TextField fx:id="regTreningField" prefHeight="27.0" prefWidth="248.0" promptText=" (tidsstempel, varighet, personligForm, personligPrestasjon, notat) (tidsstempel, varighet, personligForm, personligPrestasjon, notat)" />
@@ -65,7 +65,7 @@
             <Button fx:id="sloOppButton" mnemonicParsing="false" onAction="#getOvelse" prefHeight="27.0" prefWidth="151.0" text="Slå opp" />
          </children>
       </HBox>
-      <Button fx:id="personligFormButton" layoutX="283.0" layoutY="483.0" mnemonicParsing="false" onAction="#getGjennomsnitt" prefHeight="27.0" prefWidth="151.0" text="Personlig form" />
+      <Button fx:id="personligFormButton" layoutX="277.0" layoutY="483.0" mnemonicParsing="false" onAction="#getGjennomsnitt" prefHeight="27.0" prefWidth="151.0" text="Personlig form" />
       <TextArea fx:id="tekstFelt" layoutX="477.0" layoutY="84.0" prefHeight="425.0" prefWidth="200.0" />
    </children>
 </AnchorPane>
