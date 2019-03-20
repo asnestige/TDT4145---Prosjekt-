@@ -65,7 +65,7 @@
       </HBox>
       <HBox layoutX="26.0" layoutY="433.0" prefHeight="27.0" prefWidth="398.0">
          <children>
-            <TextField fx:id="leggTilOvelseButtonleggTilOvelseField" prefHeight="27.0" prefWidth="248.0" promptText="GruppeID, ØvelseID" />
+            <TextField fx:id="leggTilOvelseIGruppeField" prefHeight="27.0" prefWidth="248.0" promptText="GruppeID, ØvelseID" />
             <Button fx:id="leggTilOvelseButton" mnemonicParsing="false" onAction="#leggTilOvelseIGruppe" prefHeight="27.0" prefWidth="151.0" text="Legg til øvelse" />
          </children></HBox>
       <Button fx:id="personligFormButton" layoutX="275.0" layoutY="542.0" mnemonicParsing="false" onAction="#getGjennomsnitt" prefHeight="27.0" prefWidth="151.0" text="Personlig form" />
