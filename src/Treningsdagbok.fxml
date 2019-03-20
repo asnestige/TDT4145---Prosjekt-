@@ -43,7 +43,7 @@
       </HBox>
       <HBox layoutX="26.0" layoutY="260.0" prefHeight="27.0" prefWidth="422.0">
          <children>
-            <TextField fx:id="nSisteOktField" prefHeight="27.0" prefWidth="248.0" promptText="antall" />
+            <TextField fx:id="nSisteOktField" prefHeight="27.0" prefWidth="248.0" promptText="Antall" />
             <Button fx:id="nSisteOktButton" mnemonicParsing="false" onAction="#getnSisteOkt" prefHeight="27.0" prefWidth="151.0" text="Få n siste økter" />
          </children>
       </HBox>
