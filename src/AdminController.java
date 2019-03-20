@@ -30,23 +30,55 @@ public class AdminController {
 
 
     public static void settInnOvelse(Connection conn, String navn, String resultat) throws SQLException {
+        String sisteOktID = "SELECT ØktID FROM treningsøkt ORDER BY ØktID DESC LIMIT 1";
+        PreparedStatement prepState = conn.prepareStatement(sisteOktID);
+        ResultSet rs = prepState.executeQuery();
+
+        int siste = 0;
+        while (rs.next()) {
+            siste = rs.getInt("ØktID");
+        }
+
+        String sisteOvelse = "SELECT ØvelseID FROM øvelse ORDER BY ØvelseID DESC LIMIT 1";
+        PreparedStatement prepState2 = conn.prepareStatement(sisteOvelse);
+        ResultSet rs2 = prepState2.executeQuery();
+
+        int denneOvelsen = 0;
+        while (rs2.next()) {
+            denneOvelsen = rs2.getInt("ØvelseID");
+        }
+
         String preQueryStatement = "INSERT INTO øvelse (Navn, Resultat) values (?,?)";
-        PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
+        PreparedStatement prepState1 = conn.prepareStatement(preQueryStatement);
 
-        prepState.setString(1,navn);
-        prepState.setString(2, resultat);
+        prepState1.setString(1, navn);
+        prepState1.setString(2, resultat);
+        prepState1.execute();
+
+        settInnOvelseUtfort(conn, siste, denneOvelsen+1);
+
+    }
+
+    public static void settInnOvelseUtfort(Connection conn, int oktID, int ovelseID) throws SQLException{
+
+        String tilRelasjon = "INSERT INTO øvelseutført (ØktID, ØvelseID) VALUES (?,?)";
+        PreparedStatement prepState = conn.prepareStatement(tilRelasjon);
+
+        prepState.setInt(1,oktID);
+        prepState.setInt(2,ovelseID);
         prepState.execute();
     }
 
-    public static void settInnApparat(Connection conn, int apparatID, String apparatNavn) throws SQLException {
+    public static void settInnApparat(Connection conn, String apparatNavn) throws SQLException {
 
-        String preQueryStatement = "INSERT INTO apparat (ApparatID, Apparatnavn) values (?,?)";
+        String preQueryStatement = "INSERT INTO apparat (Apparatnavn) values (?)";
         PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
 
-        prepState.setInt(1, apparatID);
-        prepState.setString(2, apparatNavn);
+        prepState.setString(1, apparatNavn);
         prepState.execute();
     }
+
+
 
 
 
@@ -79,13 +111,13 @@ public class AdminController {
     // 3. For hver enkelt øvelse skal det være mulig å se en resultatlogg i et gitt tidsintervall spesifisert
     // av brukeren.
 
-    public static List<String> getResultatlogg(Connection conn, String ovelseNavn, Timestamp startTid, Timestamp sluttTid) throws SQLException {
-        String preQueryStatement = "SELECT Resultat FROM (treningsøkt NATURAL JOIN øvelseutført NATURAL JOIN øvelse) WHERE (Navn = ?) AND (Tidsstempel BETWEEN ? AND ?)";
+    public static List<String> getResultatlogg(Connection conn, String ovelseNavn, int start, int slutt) throws SQLException {
+        String preQueryStatement = "SELECT Resultat FROM (treningsøkt NATURAL JOIN øvelseutført NATURAL JOIN øvelse) WHERE (Navn = ?) AND (ØktID BETWEEN ? AND ?)";
         PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
 
         prepState.setString(1, ovelseNavn);
-        prepState.setTimestamp(2, startTid);
-        prepState.setTimestamp(3, sluttTid);
+        prepState.setInt(2, start);
+        prepState.setInt(3, slutt);
         ResultSet rs = prepState.executeQuery();
 
         List<String> resultater = new ArrayList<String>();
@@ -113,26 +145,43 @@ public class AdminController {
         prepState.execute();
     }
 
+    public static void settInnOvelseIGruppe(Connection conn, int gruppeID, int ovelseID) throws SQLException{
+        String preQueryStatement = "INSERT INTO inngåri (GruppeID, ØvelseID) VALUES (?, ?)";
+        PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
 
-    public static List<Ovelse> getOvelsegruppe(Connection conn, String ovelsegruppenavn) throws SQLException{
-        String preQueryStatement = "SELECT * FROM (øvelsegruppe NATURAL JOIN inngåri NATURAL JOIN øvelsegruppe) WHERE Øvelsegruppenavn = ?";
+        prepState.setInt(1, gruppeID);
+        prepState.setInt(2, ovelseID);
+        prepState.execute();
+    }
+
+
+
+    public static List<String> getOvelsegruppe(Connection conn, String ovelsegruppenavn) throws SQLException{
+        String preQueryStatement = "SELECT * FROM (øvelsegruppe NATURAL JOIN inngåri NATURAL JOIN øvelse) WHERE Øvelsegruppenavn = ?";
         PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
 
         prepState.setString(1, ovelsegruppenavn);
         ResultSet rs = prepState.executeQuery();
 
-        //Lager en map der Ovelsegruppenavn er key, og liste med navnene til Ovelser er value
-        Map<String, ArrayList<Ovelse>> inngåri = new HashMap<String, ArrayList<Ovelse>>();
-        while (rs.next()) {
-            if(inngåri.containsKey(rs.getString("Øvelsegruppenavn"))) {
-                return inngåri.get(rs.getString("Øvelsegruppenavn"));
-            }
-            else {
-                Ovelse ovelse = new Ovelse(rs.getString("Navn"), rs.getString("Notat"));
-                inngåri.put(rs.getString("Øvelsegruppenavn"), new ArrayList<Ovelse>(Arrays.asList(ovelse)));
+        List<String> ovelse = new ArrayList<String>();
+        while(rs.next()) {
+            if(rs.getString("Øvelsegruppenavn").equals(ovelsegruppenavn)) {
+                ovelse.add(rs.getString("Navn"));
             }
         }
-        return inngåri.get(rs.getString("Øvelsegruppenavn"));
+        return ovelse;
+
+//        Map<String, ArrayList<Ovelse>> inngari = new HashMap<String, ArrayList<Ovelse>>();
+//        while (rs.next()) {
+//            if(inngari.containsKey(rs.getString("Øvelsegruppenavn"))) {
+//                return inngari.get(rs.getString("Øvelsegruppenavn"));
+//            }
+//            else {
+//                Ovelse ovelse = new Ovelse(rs.getString("Navn"), rs.getString("Notat"));
+//                inngari.put(rs.getString("Øvelsegruppenavn"), new ArrayList<Ovelse>(Arrays.asList(ovelse)));
+//            }
+//        }
+//        return inngari.get(rs.getString("Øvelsegruppenavn"));
     }
 
 
