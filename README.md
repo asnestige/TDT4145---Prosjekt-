@@ -1,4 +1,5 @@
-# TDT4145 - Datamodellering og databasesystemer Prosjekt 2019
+# TDT4145 - Datamodellering og databasesystemer 
+# Prosjekt 2019
 Gruppeprosjekt i TDT4145.
 
 # Læringsmål for prosjektet er å:
