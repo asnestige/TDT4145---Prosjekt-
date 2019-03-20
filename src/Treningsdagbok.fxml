@@ -16,7 +16,7 @@
          </font>
       </Text>
       <Text layoutX="23.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dd.mm.yyyy HH:mm, varighet, form, prestasjon, notat" />
-      <Text layoutX="23.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Navn, resultat" />
+      <Text layoutX="23.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Navn, resultat, ØktID" />
       <Text layoutX="23.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
       <Text layoutX="26.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hent ut n siste treningsøkter" />
       <Text layoutX="26.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vis reultatlogg" />
@@ -31,7 +31,7 @@
       </HBox>
       <HBox layoutX="25.0" layoutY="136.0" prefHeight="27.0" prefWidth="398.0">
          <children>
-            <TextField fx:id="regOvelseField" prefHeight="27.0" prefWidth="391.0" promptText="(navn, resultat)" />
+            <TextField fx:id="regOvelseField" prefHeight="27.0" prefWidth="391.0" promptText="(navn, resultat, ØktID)" />
             <Button fx:id="regOvelseButton" mnemonicParsing="false" onAction="#registrerOvelse" prefHeight="27.0" prefWidth="291.0" text="Registrer øvelse" />
          </children>
       </HBox>

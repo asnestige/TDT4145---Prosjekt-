@@ -30,11 +30,33 @@ public class AdminController {
 
 
     public static void settInnOvelse(Connection conn, String navn, String resultat) throws SQLException {
-        String preQueryStatement = "INSERT INTO øvelse (Navn, Resultat) values (?,?)";
-        PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
+        String sisteOktID = "SELECT ØktID FROM treningsøkt ORDER BY ØktID DESC LIMIT 1";
+        PreparedStatement prepState = conn.prepareStatement(sisteOktID);
+        ResultSet rs = prepState.executeQuery();
 
-        prepState.setString(1,navn);
-        prepState.setString(2, resultat);
+        int siste = 0;
+        while (rs.next()) {
+            siste = rs.getInt("ØktID");
+            System.out.println(siste);
+        }
+
+        String preQueryStatement = "INSERT INTO øvelse (Navn, Resultat) values (?,?)";
+        PreparedStatement prepState1 = conn.prepareStatement(preQueryStatement);
+
+        prepState1.setString(1, navn);
+        prepState1.setString(2, resultat);
+        prepState1.execute();
+
+        settInnOvelseUtfort(conn, siste, navn);
+
+    }
+
+    public static void settInnOvelseUtfort(Connection conn, int oktID, String navn) throws SQLException{
+        String tilRelasjon = "INSERT INTO øvelseutført (ØktID, Navn) VALUES (?,?)";
+        PreparedStatement prepState = conn.prepareStatement(tilRelasjon);
+
+        prepState.setInt(1,oktID);
+        prepState.setString(2,navn);
         prepState.execute();
     }
 
@@ -47,6 +69,8 @@ public class AdminController {
         prepState.setString(2, apparatNavn);
         prepState.execute();
     }
+
+
 
 
 
@@ -79,13 +103,13 @@ public class AdminController {
     // 3. For hver enkelt øvelse skal det være mulig å se en resultatlogg i et gitt tidsintervall spesifisert
     // av brukeren.
 
-    public static List<String> getResultatlogg(Connection conn, String ovelseNavn, Timestamp startTid, Timestamp sluttTid) throws SQLException {
-        String preQueryStatement = "SELECT Resultat FROM (treningsøkt NATURAL JOIN øvelseutført NATURAL JOIN øvelse) WHERE (Navn = ?) AND (Tidsstempel BETWEEN ? AND ?)";
+    public static List<String> getResultatlogg(Connection conn, String ovelseNavn, int start, int slutt) throws SQLException {
+        String preQueryStatement = "SELECT Resultat FROM (treningsøkt NATURAL JOIN øvelseutført NATURAL JOIN øvelse) WHERE (Navn = ?) AND (ØktID BETWEEN ? AND ?)";
         PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
 
         prepState.setString(1, ovelseNavn);
-        prepState.setTimestamp(2, startTid);
-        prepState.setTimestamp(3, sluttTid);
+        prepState.setInt(2, start);
+        prepState.setInt(3, slutt);
         ResultSet rs = prepState.executeQuery();
 
         List<String> resultater = new ArrayList<String>();
