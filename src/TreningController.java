@@ -196,10 +196,10 @@ public class TreningController {
     public void leggTilOvelseIGruppe() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         try {
             List<String> input = Arrays.asList(leggTilOvelseIGruppeField.getText().split(","));
-            String groupName = input.get(0);
-            int ovelseID = Integer.valueOf(input.get(1));
-            AdminController.insertGroupContainsExercise(myConn, groupName, ovelseID);
-            tekstFelt.setText("Exercise added to exercise group.");
+            int gruppeID = Integer.valueOf(input.get(0).trim());
+            int ovelseID = Integer.valueOf(input.get(1).trim());
+            AdminController.settInnOvelseIGruppe(myConn, gruppeID, ovelseID);
+            tekstFelt.setText("Øvelse er lagt til i gruppe");
 
         }catch (RuntimeException e) {
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
@@ -207,7 +207,6 @@ public class TreningController {
 
 
     }
-
 
 
     @FXML

@@ -20,12 +20,9 @@
       <Text layoutX="23.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Navn, resultat" />
       <Text layoutX="23.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="apparatID, apparatnavn" />
 
-      <Text layoutX="23.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Navn, resultat, ØktID" />
-      <Text layoutX="23.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-
       <Text layoutX="26.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hent ut n siste treningsøkter" />
       <Text layoutX="26.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vis reultatlogg" />
-      <Text layoutX="23.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="gruppe, øvelsesnavn" wrappingWidth="158.2534151673317" />
+      <Text layoutX="26.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gruppenavn, muskelgruppe" wrappingWidth="366.2534151673317" />
       <Text layoutX="23.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Slå opp gruppe" wrappingWidth="158.2534151673317" />
       <Text layoutX="31.0" layoutY="501.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gjennomsnitlig personlig form:" wrappingWidth="232.2534151673317" />
       <HBox layoutX="24.0" layoutY="86.0" prefHeight="40.0" prefWidth="422.0">
@@ -60,7 +57,7 @@
       </HBox>
       <HBox layoutX="26.0" layoutY="379.0" prefHeight="27.0" prefWidth="398.0">
          <children>
-            <TextField fx:id="regOvelsegruppeField" prefHeight="27.0" prefWidth="248.0" promptText="(gruppe, øvelsesnavn)" />
+            <TextField fx:id="regOvelsegruppeField" prefHeight="27.0" prefWidth="248.0" promptText="(gruppenavn, muskelgruppe)" />
             <Button fx:id="regOvelsegruppeButton" mnemonicParsing="false" onAction="#registrerOvelsegruppe" prefHeight="27.0" prefWidth="151.0" text="Registrer øvelsegruppe" textFill="#c9138c" />
          </children>
       </HBox>
