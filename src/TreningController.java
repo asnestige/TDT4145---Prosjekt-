@@ -36,10 +36,8 @@ public class TreningController {
     public void registrerOvelse() throws SQLException {
     try{
         List<String> input = Arrays.asList(regOvelseField.getText().split(","));
-        String navn = input.get(0);
-        System.out.println(navn);
-        String beskrivelse = input.get(1);
-        System.out.println(beskrivelse);
+        String navn = input.get(0).trim();
+        String beskrivelse = input.get(1).trim();
         AdminController.settInnOvelse(myConn, navn, beskrivelse);
         tekstFelt.setText("Exercise added");
         }
@@ -57,8 +55,8 @@ public class TreningController {
 
         try {
             List<String> input = Arrays.asList(regApparatField.getText().split(","));
-            String navn = input.get(1);
-            int apparatID = Integer. parseInt(input.get(0));
+            String navn = input.get(1).trim();
+            int apparatID = Integer. parseInt(input.get(0).trim());
             //legg til apparat
             AdminController.settInnApparat(myConn, apparatID, navn);
             tekstFelt.setText("Machine added");
@@ -81,13 +79,13 @@ public class TreningController {
     public Timestamp makeTimetamp(List<String> input) {
         List<String> datoString = Arrays.asList(input.get(0).split("\\."));
 
-        int ar = Integer.parseInt(datoString.get(2));
-        int maned = Integer.parseInt(datoString.get(1));
-        int dag = Integer.parseInt(datoString.get(0));
+        int ar = Integer.parseInt(datoString.get(2).trim());
+        int maned = Integer.parseInt(datoString.get(1).trim());
+        int dag = Integer.parseInt(datoString.get(0).trim());
 
         List<String> tidString = Arrays.asList(input.get(1).split(":"));
-        int time = Integer.parseInt(tidString.get(0));
-        int minutt = Integer.parseInt(tidString.get(1));
+        int time = Integer.parseInt(tidString.get(0).trim());
+        int minutt = Integer.parseInt(tidString.get(1).trim());
 
         return new Timestamp(ar-1900, maned-1, dag, time, minutt,0,0);
     }
@@ -109,7 +107,7 @@ public class TreningController {
             double varighet = Double.parseDouble(input.get(1).trim());
             int personligForm = Integer.parseInt(input.get(2).trim());
             int personligPrestasjon = Integer.parseInt(input.get(3).trim());
-            String notat = input.get(4);
+            String notat = input.get(4).trim();
             System.out.println(timestamp);
 
 
@@ -160,27 +158,21 @@ public class TreningController {
     public void getResultatlogg() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
         try {
             List<String> input = Arrays.asList(resultLoggField.getText().split(","));
-            List<String> start = Arrays.asList(input.get(1).split(" "));
-            List<String> slutt = Arrays.asList(input.get(2).split(" "));
-            String ovelseNavn = input.get(0);
-
-            //finne start timestamp
-
-            Timestamp fra = makeTimetamp(start);
-
-            //finne end timestamp
-            Timestamp til = makeTimetamp(slutt);
+            int start = Integer.parseInt(input.get(1).trim());
+            int slutt = Integer.parseInt(input.get(2).trim());
+            String ovelseNavn = input.get(0).trim();
 
             String resultatlogg = "";
-            List<String> results = AdminController.getResultatlogg(myConn, ovelseNavn, fra, til);
+            List<String> results = AdminController.getResultatlogg(myConn, ovelseNavn, start, slutt);
 
             for (String result: results ){
-                resultatlogg += result;
+                resultatlogg += result+"\n";
             }
             tekstFelt.setText(resultatlogg);
         }
         catch (RuntimeException e) {
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
+            System.out.println(e);
         }
     }
 
@@ -190,8 +182,8 @@ public class TreningController {
     public void registrerOvelsegruppe() throws SQLException {
         try{
             List<String> input = Arrays.asList(regOvelsegruppeField.getText().split(","));
-            String navn = input.get(0);
-            String muskelgruppe = input.get(1);
+            String navn = input.get(0).trim();
+            String muskelgruppe = input.get(1).trim();
             AdminController.settInnOvelsegruppe(myConn, navn, muskelgruppe);
             tekstFelt.setText("ExerciseGroup added");
         }
