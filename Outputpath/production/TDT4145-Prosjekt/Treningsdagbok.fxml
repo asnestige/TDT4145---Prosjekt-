@@ -8,14 +8,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="706.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TreningController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="706.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TreningController">
    <children>
       <Text fill="#2946ab" layoutX="44.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Treningsdagbok">
          <font>
             <Font name="Avenir Book" size="29.0" />
          </font>
       </Text>
-      <Text layoutX="23.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dd.mm.yyyy HH:mm" />
+      <Text layoutX="23.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dd.mm.yyyy HH:mm, varighet, form, prestasjon, notat" />
       <Text layoutX="23.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Navn, resultat" />
       <Text layoutX="23.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
       <Text layoutX="26.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hent ut n siste treningsøkter" />

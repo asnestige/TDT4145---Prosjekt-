@@ -79,7 +79,7 @@ public class TreningController {
 
     //hjelper til å lage Timestamp-instans av en string vi får inn på bestemt format "dd.mm.yyyy hh:mm:ss:nn"
     public Timestamp makeTimetamp(List<String> input) {
-        List<String> datoString = Arrays.asList(input.get(0).split("-"));
+        List<String> datoString = Arrays.asList(input.get(0).split("\\."));
 
         int ar = Integer.parseInt(datoString.get(2));
         int maned = Integer.parseInt(datoString.get(1));
