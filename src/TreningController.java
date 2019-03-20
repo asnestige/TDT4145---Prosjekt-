@@ -205,7 +205,6 @@ public class TreningController {
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
         }
 
-
     }
 
 
