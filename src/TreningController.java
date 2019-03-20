@@ -219,7 +219,7 @@ public class TreningController {
         String input = sloOppField.getText();
         List<Ovelse> g = AdminController.getOvelsegruppe(myConn, input);
         for (Ovelse ovelse: g){
-            result += ovelse.toString();
+            result += ovelse.toString() + "\n";
         }
         tekstFelt.setText(result);
 
