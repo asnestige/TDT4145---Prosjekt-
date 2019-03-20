@@ -136,4 +136,14 @@ public class AdminController {
     }
 
 
+    public static int getAntallOkter(Connection conn) throws SQLException{
+        String preQueryStatement = "SELECT COUNT(*) FROM treningsøkt;";
+        PreparedStatement prepState = conn.prepareStatement(preQueryStatement);
+        ResultSet rs = prepState.executeQuery();
+        rs.last();
+        int count=rs.getRow();
+        return count;
+    }
+
+
 }

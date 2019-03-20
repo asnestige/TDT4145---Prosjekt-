@@ -218,7 +218,7 @@ public class TreningController {
     @FXML
     public void getGjennomsnitt()  throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
 
-        List<Treningsokt> treningsokter = AdminController.getNOkter(myConn, Integer.parseInt(nSisteOktField.getText()));
+        List<Treningsokt> treningsokter = AdminController.getNOkter(myConn, AdminController.getAntallOkter((myConn)));
         int result = 0;
         for(Treningsokt treningsokt : treningsokter ){
             result += treningsokt.getPersonligForm();
@@ -227,6 +227,7 @@ public class TreningController {
 
         tekstFelt.setText(String.valueOf(gjennomsnitt));
     }
+
 
 
 
