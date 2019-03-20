@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="706.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TreningController">
+<AnchorPane fx:id="leggTilOvelse" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="626.0" prefWidth="706.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TreningController">
    <children>
       <Text fill="#2946ab" layoutX="44.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Treningsdagbok">
          <font>
@@ -16,13 +16,13 @@
          </font>
       </Text>
       <Text layoutX="23.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dd.mm.yyyy HH:mm, varighet, form, prestasjon, notat" />
-<<<<<<< HEAD
+
       <Text layoutX="23.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Navn, resultat" />
       <Text layoutX="23.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="apparatID, apparatnavn" />
-=======
+
       <Text layoutX="23.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Navn, resultat, ØktID" />
       <Text layoutX="23.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
->>>>>>> a3ebfaeec17a5a9a310ff25cf297f9c8797ee788
+
       <Text layoutX="26.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hent ut n siste treningsøkter" />
       <Text layoutX="26.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vis reultatlogg" />
       <Text layoutX="23.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="gruppe, øvelsesnavn" wrappingWidth="158.2534151673317" />
@@ -61,7 +61,7 @@
       <HBox layoutX="26.0" layoutY="379.0" prefHeight="27.0" prefWidth="398.0">
          <children>
             <TextField fx:id="regOvelsegruppeField" prefHeight="27.0" prefWidth="248.0" promptText="(gruppe, øvelsesnavn)" />
-            <Button fx:id="regOvelsegruppeButton" mnemonicParsing="false" onAction="#registrerOvelsegruppe" prefHeight="27.0" prefWidth="151.0" text="Registrer øvelsegruppe" />
+            <Button fx:id="regOvelsegruppeButton" mnemonicParsing="false" onAction="#registrerOvelsegruppe" prefHeight="27.0" prefWidth="151.0" text="Registrer øvelsegruppe" textFill="#c9138c" />
          </children>
       </HBox>
       <HBox layoutX="26.0" layoutY="433.0" prefHeight="27.0" prefWidth="398.0">
@@ -72,5 +72,8 @@
       </HBox>
       <Button fx:id="personligFormButton" layoutX="277.0" layoutY="483.0" mnemonicParsing="false" onAction="#getGjennomsnitt" prefHeight="27.0" prefWidth="151.0" text="Personlig form" />
       <TextArea fx:id="tekstFelt" layoutX="477.0" layoutY="84.0" prefHeight="425.0" prefWidth="200.0" />
+      <TextField fx:id="leggTilOvelseButtonleggTilOvelseField" layoutX="27.0" layoutY="545.0" prefHeight="27.0" prefWidth="248.0" promptText="Øvelsesgruppe" />
+      <Text layoutX="26.0" layoutY="533.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Legg til øvelse i øvelsesgruppe" wrappingWidth="249.00000008940697" />
+      <Button fx:id="leggTilOvelseButton" layoutX="285.0" layoutY="545.0" mnemonicParsing="false" onAction="#leggTilOvelseIGruppe" prefHeight="27.0" prefWidth="151.0" text="Legg til øvelse" textFill="#dd168a" />
    </children>
 </AnchorPane>

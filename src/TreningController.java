@@ -15,10 +15,10 @@ import javafx.scene.control.TextField;
 public class TreningController {
 
     @FXML
-    TextField regTreningField, regOvelseField, regApparatField, nSisteOktField, resultLoggField, regOvelsegruppeField, sloOppField;
+    TextField regTreningField, regOvelseField, regApparatField, nSisteOktField, resultLoggField, regOvelsegruppeField, sloOppField, leggTilOvelseIGruppeField;
 
     @FXML
-    Button regTreningButton, regOvelseButton, regApparatButton, nSisteOktButton, resultLoggButton, regOvelsegruppeButton,sloOppButton, personligFormButton;
+    Button regTreningButton, regOvelseButton, regApparatButton, nSisteOktButton, resultLoggButton, regOvelsegruppeButton,sloOppButton, personligFormButton, leggTilOvelseIGruppeButton;
 
     @FXML
     TextArea tekstFelt;
@@ -190,6 +190,22 @@ public class TreningController {
         catch (RuntimeException e) {
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
         }
+    }
+
+    @FXML
+    public void leggTilOvelseIGruppe() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+        try {
+            List<String> input = Arrays.asList(leggTilOvelseIGruppeField.getText().split(","));
+            String groupName = input.get(0);
+            int ovelseID = Integer.valueOf(input.get(1));
+            AdminController.insertGroupContainsExercise(myConn, groupName, ovelseID);
+            tekstFelt.setText("Exercise added to exercise group.");
+
+        }catch (RuntimeException e) {
+            tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
+        }
+
+
     }
 
 
