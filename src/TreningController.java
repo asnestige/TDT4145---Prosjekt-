@@ -11,17 +11,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-import java.util.Arrays;
-import java.util.List;
 
 public class TreningController {
 
+    @FXML
+    TextField regTreningField, regOvelseField, regApparatField, nSisteOktField, resultLoggField, regOvelsegruppeField, sloOppField, leggTilOvelseIGruppeField;
 
     @FXML
-    TextField regTreningField, regOvelseField, regApparatField, nSisteOktField, resultLoggField, regOvelsegruppeField, sloOppField;
-
-    @FXML
-    Button regTreningButton, regOvelseButton, regApparatButton, nSisteOktButton, resultLoggButton, regOvelsegruppeButton,sloOppButton, personligFormButton;
+    Button regTreningButton, regOvelseButton, regApparatButton, nSisteOktButton, resultLoggButton, regOvelsegruppeButton,sloOppButton, personligFormButton, leggTilOvelseIGruppeButton;
 
     @FXML
     TextArea tekstFelt;
@@ -29,8 +26,7 @@ public class TreningController {
     Connection myConn;
 
     public void initialize() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
-        this.myConn = DBConn.getConn();
-
+        this.myConn = DBConn.getDBConnection();
     }
 
 
@@ -40,8 +36,8 @@ public class TreningController {
     public void registrerOvelse() throws SQLException {
     try{
         List<String> input = Arrays.asList(regOvelseField.getText().split(","));
-        String navn = input.get(0);
-        String beskrivelse = input.get(1);
+        String navn = input.get(0).trim();
+        String beskrivelse = input.get(1).trim();
         AdminController.settInnOvelse(myConn, navn, beskrivelse);
         tekstFelt.setText("Exercise added");
         }
@@ -50,58 +46,91 @@ public class TreningController {
         }
 
     }
+
+
+
+
     @FXML
-    public void registrerApperat() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void registrerApparat() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
         try {
             List<String> input = Arrays.asList(regApparatField.getText().split(","));
-            String navn = input.get(0);
-            int apparatID = Integer. parseInt(input.get(1));
-            //legg til apparat
-            AdminController.settInnApparat(myConn, apparatID, navn);
+            String navn = input.get(0).trim();
+            AdminController.settInnApparat(myConn, navn);
             tekstFelt.setText("Machine added");
+
         }
 
         catch (RuntimeException e){
+            System.out.println(e);
+
 
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
         }
-
     }
 
+
+
+
+
+    //hjelper til å lage Timestamp-instans av en string vi får inn på bestemt format "dd.mm.yyyy hh:mm:ss:nn"
+    public Timestamp makeTimetamp(List<String> input) {
+        List<String> datoString = Arrays.asList(input.get(0).split("\\."));
+
+        int ar = Integer.parseInt(datoString.get(2).trim());
+        int maned = Integer.parseInt(datoString.get(1).trim());
+        int dag = Integer.parseInt(datoString.get(0).trim());
+
+        List<String> tidString = Arrays.asList(input.get(1).split(":"));
+        int time = Integer.parseInt(tidString.get(0).trim());
+        int minutt = Integer.parseInt(tidString.get(1).trim());
+
+        return new Timestamp(ar-1900, maned-1, dag, time, minutt,0,0);
+    }
+
+
+
+
+
+
     @FXML
-    public void registrerTreningsokt(){
+    public void registrerTreningsokt() throws SQLException{
 
         try {
             List<String> input = Arrays.asList(regTreningField.getText().split(","));
 
+            List<String> tidListe = Arrays.asList(input.get(0).split(" "));
+            Timestamp timestamp = makeTimetamp(tidListe);
 
-            List<String> dateString = Arrays.asList(input.get(0).split("-"));
-            int ar = Integer.parseInt(dateString.get(0));
-            int maned = Integer.parseInt(dateString.get(1));
-            int dag = Integer.parseInt(dateString.get(2));
-            Date dato = new Date(ar - 1900, maned - 1, dag);
-            Time tid = Time.valueOf(input.get(1));
+            double varighet = Double.parseDouble(input.get(1).trim());
+            int personligForm = Integer.parseInt(input.get(2).trim());
+            int personligPrestasjon = Integer.parseInt(input.get(3).trim());
+            String notat = input.get(4).trim();
+            System.out.println(timestamp);
 
 
-            int varighet = Integer.parseInt(input.get(2));
-            int personligform = Integer.parseInt(input.get(3));
-            int prestasjon = Integer.parseInt(input.get(4));
-            String notat = input.get(5);
+            AdminController.settInnTreningsokt(myConn, timestamp, varighet, personligForm, personligPrestasjon, notat);
+            tekstFelt.setText("Treningsøkten er registrert!");
         }
 
         catch (RuntimeException e){
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
+            System.out.println(e);
+
         }
-
-
     }
+
+
+
+
+
+
     // 2. Få opp informasjon om et antall n sist gjennomførte treningsøkter med notater, der n spesifiseres av brukeren.
     @FXML
     public void getnSisteOkt() throws NumberFormatException, SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException{
         try {
             List<Treningsokt> treningsokter = AdminController.getNOkter(myConn, Integer.parseInt(nSisteOktField.getText()));
-            String result = "Date \t\t tidspunkt \t varighet \t Form \t Prestasjon \t Notat\n";
+            String result = "Dato \t\t Tidspunkt \t Varighet \t Form \t Prestasjon \t Notat\n";
 
             for(Treningsokt treningsokt : treningsokter ) {
                 result += treningsokt.getTidsstempel().toString() + "\t";
@@ -118,39 +147,30 @@ public class TreningController {
         }
     }
 
+
+
+
+
     // 3. For hver enkelt øvelse skal det være mulig å se en resultatlogg i et gitt tidsintervall
     @FXML
     public void getResultatlogg() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
         try {
             List<String> input = Arrays.asList(resultLoggField.getText().split(","));
-            List<String> startDate = Arrays.asList(input.get(1).split("-"));
-            List<String> endDate = Arrays.asList(input.get(2).split("-"));
-            String ovelseNavn = input.get(0);
-
-    //finne start timestamp
-            int startAr = Integer.parseInt(startDate.get(2));
-            int startManed = Integer.parseInt(startDate.get(1));
-            int startDag = Integer.parseInt(startDate.get(0));
-
-            Timestamp dateStart = new Timestamp(startAr, startManed, startDag,0,0,0,0);
-
-    //finne end timestamp
-            int endAr = Integer.parseInt(endDate.get(2));
-            int endManed = Integer.parseInt(endDate.get(1));
-            int endDag = Integer.parseInt(endDate.get(0));
-
-            Timestamp dateEnd = new Timestamp(endAr, endManed, endDag,0,0,0,0);
+            int start = Integer.parseInt(input.get(1).trim());
+            int slutt = Integer.parseInt(input.get(2).trim());
+            String ovelseNavn = input.get(0).trim();
 
             String resultatlogg = "";
-            List<String> results = AdminController.getResultatlogg(myConn, ovelseNavn, dateStart, dateEnd);
+            List<String> results = AdminController.getResultatlogg(myConn, ovelseNavn, start, slutt);
+
             for (String result: results ){
-                resultatlogg += result;
+                resultatlogg += result+"\n";
             }
             tekstFelt.setText(resultatlogg);
-
         }
         catch (RuntimeException e) {
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
+            System.out.println(e);
         }
     }
 
@@ -160,24 +180,46 @@ public class TreningController {
     public void registrerOvelsegruppe() throws SQLException {
         try{
             List<String> input = Arrays.asList(regOvelsegruppeField.getText().split(","));
-            String navn = input.get(0);
-            String muskelgruppe = input.get(1);
+            String navn = input.get(0).trim();
+            String muskelgruppe = input.get(1).trim();
             AdminController.settInnOvelsegruppe(myConn, navn, muskelgruppe);
             tekstFelt.setText("ExerciseGroup added");
         }
         catch (RuntimeException e) {
             tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
         }
+    }
+
+    @FXML
+    public void leggTilOvelseIGruppe() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+        try {
+            List<String> input = Arrays.asList(leggTilOvelseIGruppeField.getText().split(","));
+
+            System.out.println(input);
+
+            int gruppeID = Integer.parseInt(input.get(0).trim());
+            int ovelseID = Integer.parseInt(input.get(1).trim());
+            AdminController.settInnOvelseIGruppe(myConn, gruppeID, ovelseID);
+            tekstFelt.setText("Exercise added to exercise group.");
+
+        }catch (RuntimeException e) {
+            System.out.println(e);
+            tekstFelt.setText("Error: Key is already taken or you wrote unvalid data");
 
         }
+
+
+    }
+
+
 
     @FXML
     public void getOvelse() throws SQLException{
         String result = "";
         String input = sloOppField.getText();
-        List<Ovelse> g = AdminController.getOvelsegruppe(myConn, input);
-        for (Ovelse ovelse: g){
-            result += ovelse.toString();
+        List<String> g = AdminController.getOvelsegruppe(myConn, input);
+        for (String ovelse: g){
+            result += ovelse+"\n";
         }
         tekstFelt.setText(result);
 
